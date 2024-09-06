@@ -17,6 +17,8 @@ const Onboarding = () => {
   const [isNext, setIsNext] = useState(false);
   const [formData, setFormData] = useState({name: '', age: ''});
 
+  console.log('step', step);
+
   const getStepComponent = (): React.ReactNode => {
     switch (step) {
       case 0.2:
@@ -79,7 +81,9 @@ const Onboarding = () => {
           description={
             step === 0.6
               ? 'Choose a location to start'
-              : 'Just a few steps to personalize your experience'
+              : step === 0.8 || step === 1
+              ? 'Just a few steps to personalize your experience'
+              : null
           }
           ui={getStepComponent()}
           isNext={isNext}

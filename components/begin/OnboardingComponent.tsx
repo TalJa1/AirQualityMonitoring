@@ -57,7 +57,7 @@ const StepLoader: React.FC<{
         <TouchableOpacity
           disabled={step === 0.2}
           onPress={() => {
-            setStep(step - 0.2);
+            setStep(parseFloat((step - 0.2).toFixed(1)));
           }}
           style={[
             styles.circleButton,
@@ -68,7 +68,7 @@ const StepLoader: React.FC<{
         <TouchableOpacity
           disabled={isNext === false ? true : false}
           onPress={() => {
-            setStep(step + 0.2);
+            setStep(parseFloat((step + 0.2).toFixed(1)));
           }}
           style={[
             styles.circleButton,
