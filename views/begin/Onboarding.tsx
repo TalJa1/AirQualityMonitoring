@@ -1,13 +1,20 @@
 /* eslint-disable react-native/no-inline-styles */
-import {SafeAreaView, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import OnboardingComponent from '../../components/begin/OnboardingComponent';
 import {centerAll, containerStyle, vh, vw} from '../../services/styleSheet';
 
 const Onboarding = () => {
   const [isBoarding, setIsBoarding] = useState(false);
+  const [step, setStep] = useState(0.2);
   return (
-    <React.Fragment>
+    <>
       {isBoarding === false ? (
         <SafeAreaView
           style={[
@@ -27,16 +34,29 @@ const Onboarding = () => {
               },
               centerAll,
             ]}
-            onPress={() => setIsBoarding(false)}>
+            onPress={() => setIsBoarding(true)}>
             <Text style={{color: '#FCFCFC', fontSize: 20, fontWeight: '700'}}>
               Get started
             </Text>
           </TouchableOpacity>
         </SafeAreaView>
       ) : (
-        <OnboardingComponent />
+        <OnboardingComponent
+          setStep={setStep}
+          step={step}
+          title="Before jumping in, let's know each orther"
+          ui={<GetNameView />}
+        />
       )}
-    </React.Fragment>
+    </>
+  );
+};
+
+const GetNameView: React.FC = () => {
+  return (
+    <View style={centerAll}>
+      <Text style={{color: 'red'}}>Tai</Text>
+    </View>
   );
 };
 
