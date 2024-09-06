@@ -17,8 +17,6 @@ const Onboarding = () => {
   const [isNext, setIsNext] = useState(false);
   const [formData, setFormData] = useState({name: '', age: ''});
 
-  console.log('step', step);
-
   const getStepComponent = (): React.ReactNode => {
     switch (step) {
       case 0.2:
@@ -39,6 +37,8 @@ const Onboarding = () => {
         );
       case 0.6:
         return <WelcomeView />;
+      case 1:
+        return <WelcomeViewLast />;
     }
   };
 
@@ -93,8 +93,20 @@ const Onboarding = () => {
   );
 };
 
+const WelcomeViewLast: React.FC = () => {
+  return (
+    <View>
+      <Text style={{color: '#6E778B'}}>T1</Text>
+    </View>
+  );
+};
+
 const WelcomeView: React.FC = () => {
-  return <View></View>;
+  return (
+    <View>
+      <Text style={{color: '#6E778B'}}>T</Text>
+    </View>
+  );
 };
 
 const GetAgeView: React.FC<{
