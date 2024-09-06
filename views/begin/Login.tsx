@@ -19,8 +19,12 @@ const Login = () => {
     <SafeAreaView style={styles.container}>
       <ScrollView
         style={{paddingHorizontal: vw(5)}}
-        contentContainerStyle={{marginVertical: vh(1)}}>
-        <View style={{rowGap: vh(1)}}>
+        contentContainerStyle={{
+          marginVertical: vh(1),
+          flex: 1,
+          justifyContent: 'flex-end',
+        }}>
+        <View style={{rowGap: vh(1), marginBottom: vh(4)}}>
           <BtnLayout title="Sign In" btnColor="#3E3792" textColor="white" />
           <View
             style={{
@@ -34,6 +38,16 @@ const Login = () => {
                 Sign up
               </Text>
             </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginVertical: vh(2),
+            }}>
+            <View style={{flex: 1, height: 1, backgroundColor: '#4C4C4C'}} />
+            <Text style={{marginHorizontal: vw(2), color: '#4C4C4C'}}>OR</Text>
+            <View style={{flex: 1, height: 1, backgroundColor: '#4C4C4C'}} />
           </View>
           <BtnLayout
             title="Continue with Google"
