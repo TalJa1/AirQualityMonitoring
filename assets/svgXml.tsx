@@ -9,6 +9,18 @@ export const test = (w?: any, h?: any, color?: any) => {
   return <SvgXml xml={xml} width={w} height={h} />;
 };
 
+export const locationIcon = (w?: any, h?: any, color?: any) => {
+  const xml = `<svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M9.81586 18.6077C13.8509 16.5502 17 13.1429 17 9C17 4.58172 13.4183 1 9 1C4.58172 1 1 4.58172 1 9C1 13.1429 4.14909 16.5502 8.18414 18.6077C8.69679 18.8691 9.30321 18.8691 9.81586 18.6077Z" stroke="#6E778B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12 9C12 10.6569 10.6569 12 9 12C7.34315 12 6 10.6569 6 9C6 7.34315 7.34315 6 9 6C10.6569 6 12 7.34315 12 9Z" stroke=${
+    color ?? '#6E778B'
+  } stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+  return <SvgXml xml={xml} width={w} height={h} />;
+};
+
 export const arrowBackIcon = (w?: any, h?: any, color?: any) => {
   const xml = `<svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M9 1L1 9L9 17" stroke=${

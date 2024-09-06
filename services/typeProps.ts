@@ -11,4 +11,5 @@ export interface OnboardingComponentProps {
   step: number;
   setStep: (newStep: number) => void;
   ui: React.ReactNode;
+  isNext: boolean;
 }

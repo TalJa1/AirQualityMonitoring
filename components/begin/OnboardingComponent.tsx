@@ -20,6 +20,7 @@ const OnboardingComponent: React.FC<OnboardingComponentProps> = ({
   description,
   setStep,
   ui,
+  isNext,
 }) => {
   useStatusBar('white');
   return (
@@ -31,7 +32,7 @@ const OnboardingComponent: React.FC<OnboardingComponentProps> = ({
             <Text style={styles.description}>{description}</Text>
           </View>
           <View>{ui && React.isValidElement(ui) ? ui : null}</View>
-          <StepLoader step={step} setStep={setStep} />
+          <StepLoader step={step} setStep={setStep} isNext={isNext} />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -41,7 +42,8 @@ const OnboardingComponent: React.FC<OnboardingComponentProps> = ({
 const StepLoader: React.FC<{
   step: number;
   setStep: (newStep: number) => void;
-}> = ({step, setStep}) => {
+  isNext: boolean;
+}> = ({step, setStep, isNext}) => {
   return (
     <View>
       <Progress.Bar
@@ -64,10 +66,14 @@ const StepLoader: React.FC<{
           <Text style={styles.buttonText}>{arrowBackIcon(vw(6), vw(6))}</Text>
         </TouchableOpacity>
         <TouchableOpacity
+          disabled={isNext === false ? true : false}
           onPress={() => {
             setStep(step + 0.2);
           }}
-          style={styles.circleButton}>
+          style={[
+            styles.circleButton,
+            isNext === false && {backgroundColor: '#CCCED5'},
+          ]}>
           <Text style={styles.buttonText}>{arrowNextIcon(vw(6), vw(6))}</Text>
         </TouchableOpacity>
       </View>
