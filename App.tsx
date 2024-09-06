@@ -3,13 +3,19 @@ import {StyleSheet} from 'react-native';
 import Login from './views/begin/Login';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Onboarding from './views/begin/Onboarding';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="Onboarding">
+        <Stack.Screen
+          name="Onboarding"
+          component={Onboarding}
+          options={{headerShown: false}}
+        />
         <Stack.Screen
           name="Login"
           component={Login}

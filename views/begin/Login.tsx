@@ -24,7 +24,7 @@ const Login = () => {
           flex: 1,
           justifyContent: 'flex-end',
         }}>
-        <View style={{rowGap: vh(1), marginBottom: vh(4)}}>
+        <View style={{rowGap: vh(1), marginBottom: vh(5)}}>
           <BtnLayout title="Sign In" btnColor="#3E3792" textColor="white" />
           <View
             style={{
