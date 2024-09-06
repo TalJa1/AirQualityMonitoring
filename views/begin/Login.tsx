@@ -22,6 +22,19 @@ const Login = () => {
         contentContainerStyle={{marginVertical: vh(1)}}>
         <View style={{rowGap: vh(1)}}>
           <BtnLayout title="Sign In" btnColor="#3E3792" textColor="white" />
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Text style={{color: '#4C4C4C'}}>Need an account? </Text>
+            <TouchableOpacity>
+              <Text style={{color: '#4C4C4C', textDecorationLine: 'underline'}}>
+                Sign up
+              </Text>
+            </TouchableOpacity>
+          </View>
           <BtnLayout
             title="Continue with Google"
             btnColor="white"
@@ -60,7 +73,7 @@ const BtnLayout: React.FC<LoginBtnProps> = ({
         centerAll,
       ]}>
       {icon}
-      <Text style={{fontSize: 20, fontWeight: 700, color: textColor}}>
+      <Text style={{fontSize: 20, fontWeight: 500, color: textColor}}>
         {title}
       </Text>
     </TouchableOpacity>
