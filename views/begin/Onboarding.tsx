@@ -15,7 +15,7 @@ const Onboarding = () => {
   const [isBoarding, setIsBoarding] = useState(false);
   const [step, setStep] = useState(0.2);
   const [isNext, setIsNext] = useState(false);
-  const [formData, setFormData] = useState({name: '', age: ''});
+  const [formData, setFormData] = useState({name: '', age: '', goal: ''});
 
   const getStepComponent = (): React.ReactNode => {
     switch (step) {
@@ -37,8 +37,16 @@ const Onboarding = () => {
         );
       case 0.6:
         return <WelcomeView />;
+      case 0.8:
+        return <WelcomeView1 />;
       case 1:
-        return <WelcomeViewLast />;
+        return (
+          <WelcomeViewLast
+            setIsNext={setIsNext}
+            formData={formData}
+            setFormData={setFormData}
+          />
+        );
     }
   };
 
@@ -93,12 +101,58 @@ const Onboarding = () => {
   );
 };
 
-const WelcomeViewLast: React.FC = () => {
+const WelcomeViewLast: React.FC<{
+  setIsNext: React.Dispatch<React.SetStateAction<boolean>>;
+  formData: {name: string; age: string; goal: string};
+  setFormData: React.Dispatch<
+    React.SetStateAction<{
+      name: string;
+      age: string;
+      goal: string;
+    }>
+  >;
+}> = ({formData, setFormData, setIsNext}) => {
+  useEffect(() => {
+    if (formData.goal.length > 0) {
+      setIsNext(true);
+    } else {
+      setIsNext(false);
+    }
+  }, [formData.goal, setIsNext]);
+
   return (
-    <View>
-      <Text style={{color: '#6E778B'}}>T1</Text>
+    <View style={{rowGap: vh(1.5)}}>
+      <Text style={{color: '#3E3792', fontSize: 24, fontWeight: '700'}}>
+        Tell us about
+      </Text>
+      <Text>
+        <Text style={{color: '#4C4C4C', fontSize: 20, fontWeight: '700'}}>
+          Your GOAL
+        </Text>
+        <Text style={{color: '#4C4C4C'}}> /optional</Text>
+      </Text>
+      <TextInput
+        placeholder="Type here"
+        placeholderTextColor={'#6E778B'}
+        value={formData.goal}
+        onChangeText={text => setFormData({...formData, goal: text})}
+        style={{
+          borderWidth: 1,
+          borderColor: '#CCCED5',
+          width: '100%',
+          borderRadius: 8,
+          textAlign: 'center',
+          color: '#3E3792',
+          fontSize: 18,
+          fontWeight: '700',
+        }}
+      />
     </View>
   );
+};
+
+const WelcomeView1: React.FC = () => {
+  return <></>;
 };
 
 const WelcomeView: React.FC = () => {
@@ -111,9 +165,13 @@ const WelcomeView: React.FC = () => {
 
 const GetAgeView: React.FC<{
   setIsNext: React.Dispatch<React.SetStateAction<boolean>>;
-  formData: {name: string; age: string};
+  formData: {name: string; age: string; goal: string};
   setFormData: React.Dispatch<
-    React.SetStateAction<{name: string; age: string}>
+    React.SetStateAction<{
+      name: string;
+      age: string;
+      goal: string;
+    }>
   >;
 }> = ({setIsNext, formData, setFormData}) => {
   useEffect(() => {
@@ -152,9 +210,13 @@ const GetAgeView: React.FC<{
 
 const GetNameView: React.FC<{
   setIsNext: React.Dispatch<React.SetStateAction<boolean>>;
-  formData: {name: string; age: string};
+  formData: {name: string; age: string; goal: string};
   setFormData: React.Dispatch<
-    React.SetStateAction<{name: string; age: string}>
+    React.SetStateAction<{
+      name: string;
+      age: string;
+      goal: string;
+    }>
   >;
 }> = ({setIsNext, formData, setFormData}) => {
   useEffect(() => {
