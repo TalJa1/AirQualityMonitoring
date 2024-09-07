@@ -9,6 +9,17 @@ export const test = (w?: any, h?: any, color?: any) => {
   return <SvgXml xml={xml} width={w} height={h} />;
 };
 
+export const upIcon = (w?: any, h?: any, color?: any) => {
+  const xml = `<svg width="13" height="8" viewBox="0 0 13 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M11.8333 7L6.49992 1.66667L1.16659 7" stroke=${
+    color ?? '#3E3792'
+  } stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+  return <SvgXml xml={xml} width={w} height={h} />;
+};
+
 export const increasingIcon = (w?: any, h?: any, color?: any) => {
   const xml = `<svg width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M19 1L12.4142 7.58579C11.6332 8.36684 10.3668 8.36683 9.58579 7.58579L8.41421 6.41421C7.63316 5.63316 6.36683 5.63317 5.58579 6.41421L1 11M19 1H13M19 1V7" stroke=${
