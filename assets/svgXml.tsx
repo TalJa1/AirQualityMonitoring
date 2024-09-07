@@ -9,6 +9,39 @@ export const test = (w?: any, h?: any, color?: any) => {
   return <SvgXml xml={xml} width={w} height={h} />;
 };
 
+export const mapIcon = (w?: any, h?: any, color?: any) => {
+  const xml = `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M7 3L3.63246 1.87749C2.33739 1.4458 1 2.40974 1 3.77485V15.5585C1 16.4193 1.55086 17.1836 2.36754 17.4558L7 19M7 3L13 1M7 3V19M13 1L17.6325 2.54415C18.4491 2.81638 19 3.58066 19 4.44152V16.2251C19 17.5903 17.6626 18.5542 16.3675 18.1225L13 17M13 1V17M13 17L7 19" stroke=${
+    color ?? '#6E778B'
+  } stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+  return <SvgXml xml={xml} width={w} height={h} />;
+};
+
+export const homeIcon = (w?: any, h?: any, color?: any) => {
+  const xml = `<svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4.50008 5.00003C5.96143 3.53868 7.59363 2.41902 8.69761 1.74091C9.50222 1.24668 10.498 1.24668 11.3026 1.74091C12.4065 2.41902 14.0387 3.53868 15.5001 5.00003C18.6685 8.16841 18.5001 10 18.5001 13C18.5001 14.4099 18.3897 15.5988 18.2726 16.4632C18.1494 17.3726 17.3563 18 16.4385 18H15.0001C13.8955 18 13.0001 17.1046 13.0001 16V14C13.0001 13.2044 12.684 12.4413 12.1214 11.8787C11.5588 11.3161 10.7957 11 10.0001 11C9.20444 11 8.44138 11.3161 7.87877 11.8787C7.31616 12.4413 7.00009 13.2044 7.00009 14V16C7.00009 17.1046 6.10466 18 5.00009 18H3.56164C2.64391 18 1.85074 17.3726 1.72757 16.4632C1.61051 15.5988 1.50009 14.4098 1.50009 13C1.50009 10 1.33169 8.16842 4.50008 5.00003Z" stroke=${
+    color ?? '#3E3792'
+  } stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+  return <SvgXml xml={xml} width={w} height={h} />;
+};
+
+export const rankIcon = (w?: any, h?: any, color?: any) => {
+  const xml = `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M6 6H14M6 10H14M8 14H12M1.5 10C1.5 3.5 3.5 1.5 10 1.5C16.5 1.5 18.5 3.5 18.5 10C18.5 16.5 16.5 18.5 10 18.5C3.5 18.5 1.5 16.5 1.5 10Z" stroke=${
+    color ?? '#6E778B'
+  } stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+  return <SvgXml xml={xml} width={w} height={h} />;
+};
+
 export const locationIcon = (w?: any, h?: any, color?: any) => {
   const xml = `<svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M9.81586 18.6077C13.8509 16.5502 17 13.1429 17 9C17 4.58172 13.4183 1 9 1C4.58172 1 1 4.58172 1 9C1 13.1429 4.14909 16.5502 8.18414 18.6077C8.69679 18.8691 9.30321 18.8691 9.81586 18.6077Z" stroke="#6E778B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
