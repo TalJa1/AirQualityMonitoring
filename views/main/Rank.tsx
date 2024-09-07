@@ -5,6 +5,7 @@ import useStatusBar from '../../services/useStatusBarCustom';
 
 const Rank = () => {
   useStatusBar('white');
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>

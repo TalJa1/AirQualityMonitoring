@@ -1,5 +1,4 @@
-/* eslint-disable react-native/no-inline-styles */
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {containerStyle} from '../../services/styleSheet';
@@ -8,18 +7,16 @@ import HeaderComponent from '../../components/HeaderComponent';
 
 const Home = () => {
   useStatusBar('white');
+
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={{flex: 1}}>
-        <View style={{flex: 1, backgroundColor: 'white'}}>
+      <ScrollView>
+        <View>
           <HeaderComponent
             title="Location"
             subtitle="Hoan Kiem, Hanoi"
             isBack={false}
           />
-          <View>
-            <Text style={{color: 'red'}}>Home</Text>
-          </View>
         </View>
       </ScrollView>
     </SafeAreaView>

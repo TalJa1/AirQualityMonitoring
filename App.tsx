@@ -109,8 +109,6 @@ const App = () => {
 
 const styles = StyleSheet.create({
   tabContainer: {
-    flex: 1,
-    backgroundColor: 'white',
     position: 'absolute',
     bottom: vh(2),
     left: vw(5),
