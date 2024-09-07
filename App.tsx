@@ -22,8 +22,8 @@ const App = () => {
         <Tab.Navigator
           initialRouteName="Home"
           screenOptions={{
-            tabBarActiveTintColor: 'blue',
-            tabBarInactiveTintColor: 'gray',
+            tabBarActiveTintColor: '#3E3792',
+            tabBarInactiveTintColor: '#6E778B',
             tabBarShowLabel: true,
             tabBarStyle: styles.tabBar,
             tabBarLabelStyle: styles.tabBarLabel,
@@ -37,6 +37,7 @@ const App = () => {
                 const iconSize = focused ? vw(7) : vw(6);
                 return (
                   <View style={styles.iconContainer}>
+                    {focused && <View style={styles.activeLine} />}
                     {homeIcon(iconSize, iconSize, color)}
                   </View>
                 );
@@ -52,6 +53,7 @@ const App = () => {
                 const iconSize = focused ? vw(7) : vw(6);
                 return (
                   <View style={styles.iconContainer}>
+                    {focused && <View style={styles.activeLine} />}
                     {rankIcon(iconSize, iconSize, color)}
                   </View>
                 );
@@ -67,6 +69,7 @@ const App = () => {
                 const iconSize = focused ? vw(7) : vw(6);
                 return (
                   <View style={styles.iconContainer}>
+                    {focused && <View style={styles.activeLine} />}
                     {mapIcon(iconSize, iconSize, color)}
                   </View>
                 );
@@ -109,7 +112,7 @@ const styles = StyleSheet.create({
     right: vw(5),
     backgroundColor: 'white',
     borderRadius: 20,
-    shadowColor: '#000',
+    shadowColor: '#E8E9F6',
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
@@ -129,6 +132,16 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     alignItems: 'center',
+  },
+  activeLine: {
+    position: 'absolute',
+    top: '-45%', // Adjust to place the line on the border
+    left: 0,
+    right: 0,
+    height: vh(0.5), // Use viewport height for height
+    borderBottomLeftRadius: vw(5),
+    borderBottomRightRadius: vw(5),
+    backgroundColor: '#3E3792',
   },
 });
 
