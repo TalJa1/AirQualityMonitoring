@@ -11,14 +11,16 @@ const Home = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={{flex: 1}}>
-        <HeaderComponent
-          title="Location"
-          subtitle="Hoan Kiem, Hanoi"
-          isBack={false}
-        />
-        <View>
-          <Text style={{color: 'red'}}>Home</Text>
-          <Text>Debugging Text</Text>
+        <View style={{flex: 1, backgroundColor: 'white'}}>
+          <HeaderComponent
+            title="Location"
+            subtitle="Hoan Kiem, Hanoi"
+            isBack={false}
+          />
+          <View>
+            <Text style={{color: 'red'}}>Home</Text>
+            <Text>Debugging Text</Text>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>

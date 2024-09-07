@@ -84,6 +84,7 @@ const App = () => {
 
   return (
     <NavigationContainer>
+      {/* Main || Login */}
       <Stack.Navigator initialRouteName="Main">
         {/* Main layout with 3 bottom tabs */}
         <Stack.Screen
@@ -116,11 +117,10 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     shadowColor: '#E8E9F6',
     shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.15,
     shadowRadius: 3.84,
   },
   tabBar: {
-    backgroundColor: 'white',
     height: vh(8),
     borderRadius: 12,
     paddingVertical: vh(1),
