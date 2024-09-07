@@ -19,7 +19,6 @@ const Home = () => {
           />
           <View>
             <Text style={{color: 'red'}}>Home</Text>
-            <Text>Debugging Text</Text>
           </View>
         </View>
       </ScrollView>
