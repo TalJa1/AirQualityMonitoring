@@ -13,3 +13,9 @@ export interface OnboardingComponentProps {
   ui: React.ReactNode;
   isNext: boolean;
 }
+
+export interface HeaderProps {
+  title: string;
+  subtitle?: string;
+  isBack: boolean;
+}

@@ -33,6 +33,7 @@ const App = () => {
             component={Home}
             options={{
               headerShown: false,
+              tabBarLabel: 'Home',
               tabBarIcon: ({color, focused}) => {
                 const iconSize = focused ? vw(7) : vw(6);
                 return (
@@ -84,11 +85,13 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Main">
+        {/* Main layout with 3 bottom tabs */}
         <Stack.Screen
           name="Main"
           component={TabNavigator}
           options={{headerShown: false}}
         />
+        {/* end here */}
         <Stack.Screen
           name="Onboarding"
           component={Onboarding}
@@ -110,19 +113,16 @@ const styles = StyleSheet.create({
     bottom: vh(2),
     left: vw(5),
     right: vw(5),
-    backgroundColor: 'white',
-    borderRadius: 20,
+    borderRadius: 12,
     shadowColor: '#E8E9F6',
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5,
   },
   tabBar: {
-    borderTopColor: 'transparent',
     backgroundColor: 'white',
     height: vh(8),
-    borderRadius: 20,
+    borderRadius: 12,
     paddingVertical: vh(1),
   },
   tabBarLabel: {

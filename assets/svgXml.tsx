@@ -9,6 +9,28 @@ export const test = (w?: any, h?: any, color?: any) => {
   return <SvgXml xml={xml} width={w} height={h} />;
 };
 
+export const headerRightIcon = (w?: any, h?: any, color?: any) => {
+  const xml = `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M6 6H14M6 10H14M10 14H14M1.5 10C1.5 3.5 3.5 1.5 10 1.5C16.5 1.5 18.5 3.5 18.5 10C18.5 16.5 16.5 18.5 10 18.5C3.5 18.5 1.5 16.5 1.5 10Z" stroke=${
+    color ?? '#6E778B'
+  } stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+  return <SvgXml xml={xml} width={w} height={h} />;
+};
+
+export const backIcon = (w?: any, h?: any, color?: any) => {
+  const xml = `<svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 1L1 9L9 17" stroke=${
+    color ?? '#6E778B'
+  } stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+  return <SvgXml xml={xml} width={w} height={h} />;
+};
+
 export const mapIcon = (w?: any, h?: any, color?: any) => {
   const xml = `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M7 3L3.63246 1.87749C2.33739 1.4458 1 2.40974 1 3.77485V15.5585C1 16.4193 1.55086 17.1836 2.36754 17.4558L7 19M7 3L13 1M7 3V19M13 1L17.6325 2.54415C18.4491 2.81638 19 3.58066 19 4.44152V16.2251C19 17.5903 17.6626 18.5542 16.3675 18.1225L13 17M13 1V17M13 17L7 19" stroke=${
