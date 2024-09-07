@@ -24,8 +24,9 @@ const App = () => {
           screenOptions={{
             tabBarActiveTintColor: 'blue',
             tabBarInactiveTintColor: 'gray',
-            tabBarShowLabel: false,
+            tabBarShowLabel: true,
             tabBarStyle: styles.tabBar,
+            tabBarLabelStyle: styles.tabBarLabel,
           }}>
           <Tab.Screen
             name="Home"
@@ -34,7 +35,11 @@ const App = () => {
               headerShown: false,
               tabBarIcon: ({color, focused}) => {
                 const iconSize = focused ? vw(7) : vw(6);
-                return <View>{homeIcon(iconSize, iconSize, color)}</View>;
+                return (
+                  <View style={styles.iconContainer}>
+                    {homeIcon(iconSize, iconSize, color)}
+                  </View>
+                );
               },
             }}
           />
@@ -45,7 +50,11 @@ const App = () => {
               headerShown: false,
               tabBarIcon: ({color, focused}) => {
                 const iconSize = focused ? vw(7) : vw(6);
-                return <View>{rankIcon(iconSize, iconSize, color)}</View>;
+                return (
+                  <View style={styles.iconContainer}>
+                    {rankIcon(iconSize, iconSize, color)}
+                  </View>
+                );
               },
             }}
           />
@@ -56,7 +65,11 @@ const App = () => {
               headerShown: false,
               tabBarIcon: ({color, focused}) => {
                 const iconSize = focused ? vw(7) : vw(6);
-                return <View>{mapIcon(iconSize, iconSize, color)}</View>;
+                return (
+                  <View style={styles.iconContainer}>
+                    {mapIcon(iconSize, iconSize, color)}
+                  </View>
+                );
               },
             }}
           />
@@ -107,6 +120,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     height: vh(8),
     borderRadius: 20,
+    paddingVertical: vh(1),
+  },
+  tabBarLabel: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    paddingBottom: vh(1),
+  },
+  iconContainer: {
+    alignItems: 'center',
   },
 });
 
