@@ -36,7 +36,7 @@ const App = () => {
               tabBarIcon: ({color, focused}) => {
                 const iconSize = focused ? vw(7) : vw(6);
                 return (
-                  <View style={styles.iconContainer}>
+                  <View>
                     {focused && <View style={styles.activeLine} />}
                     {homeIcon(iconSize, iconSize, color)}
                   </View>
@@ -52,7 +52,7 @@ const App = () => {
               tabBarIcon: ({color, focused}) => {
                 const iconSize = focused ? vw(7) : vw(6);
                 return (
-                  <View style={styles.iconContainer}>
+                  <View>
                     {focused && <View style={styles.activeLine} />}
                     {rankIcon(iconSize, iconSize, color)}
                   </View>
@@ -68,7 +68,7 @@ const App = () => {
               tabBarIcon: ({color, focused}) => {
                 const iconSize = focused ? vw(7) : vw(6);
                 return (
-                  <View style={styles.iconContainer}>
+                  <View>
                     {focused && <View style={styles.activeLine} />}
                     {mapIcon(iconSize, iconSize, color)}
                   </View>
@@ -128,9 +128,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
     paddingBottom: vh(1),
-  },
-  iconContainer: {
-    alignItems: 'center',
   },
   activeLine: {
     position: 'absolute',
