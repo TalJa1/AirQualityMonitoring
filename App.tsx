@@ -33,7 +33,6 @@ const App = () => {
             component={Home}
             options={{
               headerShown: false,
-              tabBarLabel: 'Home',
               tabBarIcon: ({color, focused}) => {
                 const iconSize = focused ? vw(7) : vw(6);
                 return (
@@ -85,7 +84,7 @@ const App = () => {
   return (
     <NavigationContainer>
       {/* Main || Login */}
-      <Stack.Navigator initialRouteName="Home1">
+      <Stack.Navigator initialRouteName="Main">
         {/* Main layout with 3 bottom tabs */}
         <Stack.Screen
           name="Main"
@@ -93,11 +92,6 @@ const App = () => {
           options={{headerShown: false}}
         />
         {/* end here */}
-        <Stack.Screen
-          name="Home1"
-          component={Home}
-          options={{headerShown: false}}
-        />
         <Stack.Screen
           name="Onboarding"
           component={Onboarding}
