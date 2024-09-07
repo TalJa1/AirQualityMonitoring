@@ -84,7 +84,7 @@ const App = () => {
   return (
     <NavigationContainer>
       {/* Main || Login */}
-      <Stack.Navigator initialRouteName="Main">
+      <Stack.Navigator initialRouteName="Home1">
         {/* Main layout with 3 bottom tabs */}
         <Stack.Screen
           name="Main"
@@ -92,6 +92,11 @@ const App = () => {
           options={{headerShown: false}}
         />
         {/* end here */}
+        <Stack.Screen
+          name="Home1"
+          component={Home}
+          options={{headerShown: false}}
+        />
         <Stack.Screen
           name="Onboarding"
           component={Onboarding}
