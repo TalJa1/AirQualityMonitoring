@@ -16,6 +16,7 @@ import GradientBackground from '../../components/GradientBackground';
 import useStatusBar from '../../services/useStatusBarCustom';
 import {increasingIcon, upIcon} from '../../assets/svgXml';
 import {AQIDetailsData} from '../../services/renderData';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Home = () => {
   useStatusBar('white');
@@ -70,7 +71,9 @@ const Home = () => {
 
 const AQIDetails: React.FC = () => {
   return (
-    <View style={styles.aqiDetailscontainer}>
+    <LinearGradient
+      colors={['#F7F9FF', 'white']}
+      style={styles.aqiDetailscontainer}>
       {AQIDetailsData.map((item, index) => (
         <View key={index} style={styles.itemContainer}>
           <View style={styles.iconContainer}>{item.icon}</View>
@@ -78,7 +81,7 @@ const AQIDetails: React.FC = () => {
           <Text style={styles.labelText}>{item.label}</Text>
         </View>
       ))}
-    </View>
+    </LinearGradient>
   );
 };
 
