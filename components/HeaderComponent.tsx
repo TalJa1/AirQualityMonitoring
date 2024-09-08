@@ -34,7 +34,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({isBack, title, subtitle}) => {
           style={{
             color: '#6E778B',
             fontSize: 14,
-            fontWeight: '400',
+            fontWeight: '700',
             textAlign: 'center',
           }}>
           {subtitle}
