@@ -45,7 +45,7 @@ const Home = () => {
 
   return (
     <GradientBackground>
-      <SafeAreaView style={[{flex: 1, paddingBottom: TAB_BAR_HEIGHT}]}>
+      <SafeAreaView style={[{flex: 1}]}>
         <ScrollView
           contentContainerStyle={{rowGap: vh(2)}}>
           <HeaderComponent
@@ -76,6 +76,7 @@ const Home = () => {
             <ChartView />
             <SliderView />
           </View>
+          <View style={{height: TAB_BAR_HEIGHT}}/>
           {/* end here */}
         </ScrollView>
       </SafeAreaView>
