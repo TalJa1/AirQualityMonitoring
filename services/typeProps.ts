@@ -1,3 +1,5 @@
+import {ImageSourcePropType} from 'react-native';
+
 export interface LoginBtnProps {
   title: string;
   icon?: any;
@@ -19,3 +21,18 @@ export interface HeaderProps {
   subtitle?: string;
   isBack: boolean;
 }
+
+export interface ImageSliderType {
+  img: ImageSourcePropType;
+  title: string;
+  description: string;
+}
+
+export interface ImageSliderPropsComponent {
+  item: ImageSliderType;
+  index: number;
+}
+
+export type ImgSliderList = {
+  itemList: ImageSliderType[];
+};

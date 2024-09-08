@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   View,
   Easing,
-  Image,
   Dimensions,
 } from 'react-native';
 import React, {useRef, useState} from 'react';
@@ -26,6 +25,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {Picker} from '@react-native-picker/picker';
 import {getMonthYearHomeChart} from '../../services/timeServices';
 import {LineChart} from 'react-native-gifted-charts';
+import Slider from '../../components/home/Slider';
 
 const Home = () => {
   useStatusBar('white');
@@ -46,8 +46,7 @@ const Home = () => {
   return (
     <GradientBackground>
       <SafeAreaView style={[{flex: 1}]}>
-        <ScrollView
-          contentContainerStyle={{rowGap: vh(2)}}>
+        <ScrollView contentContainerStyle={{rowGap: vh(2)}}>
           <HeaderComponent
             title="Location"
             subtitle="Hoan Kiem, Hanoi"
@@ -74,73 +73,14 @@ const Home = () => {
               <AQIDetails />
             </Animated.View>
             <ChartView />
-            <SliderView />
+            {/* <SliderView /> */}
+            <Slider itemList={SliderBottomSaveTabData} />
           </View>
-          <View style={{height: TAB_BAR_HEIGHT}}/>
+          <View style={{height: TAB_BAR_HEIGHT}} />
           {/* end here */}
         </ScrollView>
       </SafeAreaView>
     </GradientBackground>
-  );
-};
-
-const SliderView: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const scrollX = new Animated.Value(0);
-  const handleScroll = (event: any) => {
-    const slideSize = event.nativeEvent.layoutMeasurement.width;
-    const index = Math.floor(event.nativeEvent.contentOffset.x / slideSize);
-    setCurrentIndex(index);
-  };
-  return (
-    <View style={styles.sliderContainer}>
-      <Animated.ScrollView
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        onScroll={handleScroll}
-        scrollEventThrottle={16}
-        contentContainerStyle={{alignItems: 'center'}}>
-        {SliderBottomSaveTabData.map((item, index) => {
-          const inputRange = [
-            (index - 1) * Dimensions.get('window').width,
-            index * Dimensions.get('window').width,
-            (index + 1) * Dimensions.get('window').width,
-          ];
-
-          const scale = scrollX.interpolate({
-            inputRange,
-            outputRange: [0.8, 1, 0.8],
-            extrapolate: 'clamp',
-          });
-
-          const opacity = scrollX.interpolate({
-            inputRange,
-            outputRange: [0.5, 1, 0.5],
-            extrapolate: 'clamp',
-          });
-
-          return (
-            <Animated.View
-              key={index}
-              style={[styles.imageContainer, {transform: [{scale}], opacity}]}>
-              <Image source={item.img} style={styles.image} />
-            </Animated.View>
-          );
-        })}
-      </Animated.ScrollView>
-      <View style={styles.pagination}>
-        {SliderBottomSaveTabData.map((_, index) => (
-          <View
-            key={index}
-            style={[
-              styles.paginationDot,
-              currentIndex === index ? styles.activeDot : styles.inactiveDot,
-            ]}
-          />
-        ))}
-      </View>
-    </View>
   );
 };
 
