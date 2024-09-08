@@ -84,7 +84,7 @@ const App = () => {
   return (
     <NavigationContainer>
       {/* Main || Login */}
-      <Stack.Navigator initialRouteName="Home1">
+      <Stack.Navigator initialRouteName="Main">
         {/* Main layout with 3 bottom tabs */}
         <Stack.Screen
           name="Main"
@@ -114,10 +114,11 @@ const App = () => {
 
 const styles = StyleSheet.create({
   tabContainer: {
-    position: 'absolute',
-    bottom: vh(2),
-    left: vw(5),
-    right: vw(5),
+    flex: 1,
+    // position: 'absolute',
+    // bottom: vh(2),
+    // left: vw(5),
+    // right: vw(5),
     borderRadius: 12,
     shadowColor: '#E8E9F6',
     shadowOffset: {width: 0, height: 2},
