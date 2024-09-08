@@ -1,117 +1,148 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
+/* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import Login from './views/begin/Login';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Onboarding from './views/begin/Onboarding';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {vh, vw} from './services/styleSheet';
+import Home from './views/main/Home';
+import Rank from './views/main/Rank';
+import Map from './views/main/Map';
+import {homeIcon, mapIcon, rankIcon} from './assets/svgXml';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+const App = () => {
+  const TabNavigator = () => {
+    return (
+      <View style={styles.tabContainer}>
+        <Tab.Navigator
+          initialRouteName="Home"
+          screenOptions={{
+            tabBarActiveTintColor: '#3E3792',
+            tabBarInactiveTintColor: '#6E778B',
+            tabBarShowLabel: true,
+            tabBarStyle: styles.tabBar,
+            tabBarLabelStyle: styles.tabBarLabel,
+          }}>
+          <Tab.Screen
+            name="Home"
+            component={Home}
+            options={{
+              headerShown: false,
+              tabBarIcon: ({color, focused}) => {
+                const iconSize = focused ? vw(7) : vw(6);
+                return (
+                  <View>
+                    {focused && <View style={styles.activeLine} />}
+                    {homeIcon(iconSize, iconSize, color)}
+                  </View>
+                );
+              },
+            }}
+          />
+          <Tab.Screen
+            name="Rank"
+            component={Rank}
+            options={{
+              headerShown: false,
+              tabBarIcon: ({color, focused}) => {
+                const iconSize = focused ? vw(7) : vw(6);
+                return (
+                  <View>
+                    {focused && <View style={styles.activeLine} />}
+                    {rankIcon(iconSize, iconSize, color)}
+                  </View>
+                );
+              },
+            }}
+          />
+          <Tab.Screen
+            name="Map"
+            component={Map}
+            options={{
+              headerShown: false,
+              tabBarIcon: ({color, focused}) => {
+                const iconSize = focused ? vw(7) : vw(6);
+                return (
+                  <View>
+                    {focused && <View style={styles.activeLine} />}
+                    {mapIcon(iconSize, iconSize, color)}
+                  </View>
+                );
+              },
+            }}
+          />
+        </Tab.Navigator>
+      </View>
+    );
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <NavigationContainer>
+      {/* Main || Login */}
+      <Stack.Navigator initialRouteName="Home1">
+        {/* Main layout with 3 bottom tabs */}
+        <Stack.Screen
+          name="Main"
+          component={TabNavigator}
+          options={{headerShown: false}}
+        />
+        {/* end here */}
+        <Stack.Screen
+          name="Home1"
+          component={Home}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Onboarding"
+          component={Onboarding}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{headerShown: false}}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  tabContainer: {
+    position: 'absolute',
+    bottom: vh(2),
+    left: vw(5),
+    right: vw(5),
+    borderRadius: 12,
+    shadowColor: '#E8E9F6',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.15,
+    shadowRadius: 3.84,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  tabBar: {
+    height: vh(8),
+    borderRadius: 12,
+    paddingVertical: vh(1),
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  tabBarLabel: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    paddingBottom: vh(1),
   },
-  highlight: {
-    fontWeight: '700',
+  activeLine: {
+    position: 'absolute',
+    top: '-45%', // Adjust to place the line on the border
+    left: 0,
+    right: 0,
+    height: vh(0.5), // Use viewport height for height
+    borderBottomLeftRadius: vw(5),
+    borderBottomRightRadius: vw(5),
+    backgroundColor: '#3E3792',
   },
 });
 

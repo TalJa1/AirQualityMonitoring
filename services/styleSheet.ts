@@ -18,3 +18,8 @@ export const centerAll: TextStyle = {
   justifyContent: 'center',
   alignItems: 'center',
 };
+
+export const containerStyle: TextStyle = {
+  flex: 1,
+  backgroundColor: 'white',
+};
