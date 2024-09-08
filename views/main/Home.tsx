@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import React, {useRef, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {centerAll, containerStyle, vh, vw} from '../../services/styleSheet';
+import {centerAll, TAB_BAR_HEIGHT, vh, vw} from '../../services/styleSheet';
 import HeaderComponent from '../../components/HeaderComponent';
 import GradientBackground from '../../components/GradientBackground';
 import useStatusBar from '../../services/useStatusBarCustom';
@@ -45,9 +45,9 @@ const Home = () => {
 
   return (
     <GradientBackground>
-      <SafeAreaView style={{flex: 1}}>
+      <SafeAreaView style={[{flex: 1, paddingBottom: TAB_BAR_HEIGHT}]}>
         <ScrollView
-          contentContainerStyle={{rowGap: vh(2), paddingBottom: vh(2)}}>
+          contentContainerStyle={{rowGap: vh(2)}}>
           <HeaderComponent
             title="Location"
             subtitle="Hoan Kiem, Hanoi"
@@ -349,7 +349,6 @@ const AQIMain: React.FC<{toggleSlide: () => void}> = ({toggleSlide}) => {
 export default Home;
 
 const styles = StyleSheet.create({
-  container: containerStyle,
   txtColor: {
     color: '#4C4C4C',
   },

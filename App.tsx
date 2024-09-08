@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     paddingVertical: vh(1),
     position: 'absolute',
-    bottom: vh(2),
+    bottom: vh(1),
     left: vw(5),
     right: vw(5),
     shadowColor: '#000',

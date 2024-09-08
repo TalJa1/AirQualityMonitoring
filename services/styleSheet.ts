@@ -23,3 +23,5 @@ export const containerStyle: TextStyle = {
   flex: 1,
   backgroundColor: 'white',
 };
+
+export const TAB_BAR_HEIGHT = vh(8) + vh(1) * 2;
