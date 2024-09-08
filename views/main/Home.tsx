@@ -15,6 +15,7 @@ import HeaderComponent from '../../components/HeaderComponent';
 import GradientBackground from '../../components/GradientBackground';
 import useStatusBar from '../../services/useStatusBarCustom';
 import {increasingIcon, upIcon} from '../../assets/svgXml';
+import {AQIDetailsData} from '../../services/renderData';
 
 const Home = () => {
   useStatusBar('white');
@@ -56,6 +57,7 @@ const Home = () => {
                 elevation: 5, // For Android
                 zIndex: 1, // Ensure this view is below the first view
                 transform: [{translateY: slideAnim}],
+                overflow: 'hidden',
               }}>
               <AQIDetails />
             </Animated.View>
@@ -68,12 +70,14 @@ const Home = () => {
 
 const AQIDetails: React.FC = () => {
   return (
-    <View>
-      <Text style={[styles.txtColor, {padding: vw(5)}]}>
-        Air quality index (AQI) is a measure used to communicate how polluted
-        the air currently is or how polluted it is forecast to become. Public
-        health risks increase as the AQI rises.
-      </Text>
+    <View style={styles.aqiDetailscontainer}>
+      {AQIDetailsData.map((item, index) => (
+        <View key={index} style={styles.itemContainer}>
+          <View style={styles.iconContainer}>{item.icon}</View>
+          <Text style={styles.dataText}>{item.data}</Text>
+          <Text style={styles.labelText}>{item.label}</Text>
+        </View>
+      ))}
     </View>
   );
 };
@@ -175,5 +179,32 @@ const styles = StyleSheet.create({
   container: containerStyle,
   txtColor: {
     color: '#4C4C4C',
+  },
+  aqiDetailscontainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: vh(2),
+    width: '100%',
+  },
+  itemContainer: {
+    alignItems: 'center',
+    width: '20%',
+    rowGap: vh(0.5),
+  },
+  iconContainer: {
+    marginRight: vw(2),
+  },
+  dataText: {
+    fontSize: vw(3),
+    fontWeight: 'bold',
+    marginRight: vw(2),
+    color: '#3E3792',
+    textAlign: 'center',
+  },
+  labelText: {
+    fontSize: vw(2.5),
+    color: '#6E778B',
+    flexWrap: 'wrap',
+    textAlign: 'center',
   },
 });
