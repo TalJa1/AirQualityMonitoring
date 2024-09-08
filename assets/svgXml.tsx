@@ -9,17 +9,6 @@ export const test = (w?: any, h?: any, color?: any) => {
   return <SvgXml xml={xml} width={w} height={h} />;
 };
 
-export const homeChartDateDropdownIcon = (w?: any, h?: any, color?: any) => {
-  const xml = `<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M12.92 0.180054H6.68999H1.07999C0.119992 0.180054 -0.360007 1.34005 0.319993 2.02005L5.49999 7.20005C6.32999 8.03005 7.67999 8.03005 8.50999 7.20005L10.48 5.23005L13.69 2.02005C14.36 1.34005 13.88 0.180054 12.92 0.180054Z" fill=${
-    color ?? '#6E778B'
-  }/>
-</svg>
-`;
-
-  return <SvgXml xml={xml} width={w} height={h} />;
-};
-
 export const homeInfoIcon = (w?: any, h?: any, color?: any) => {
   const xml = `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M10 5.01001V5.00002M10 15L10 8M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z" stroke=${

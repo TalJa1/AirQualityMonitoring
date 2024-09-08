@@ -17,6 +17,8 @@ import useStatusBar from '../../services/useStatusBarCustom';
 import {homeInfoIcon, increasingIcon, upIcon} from '../../assets/svgXml';
 import {AQIDetailsData} from '../../services/renderData';
 import LinearGradient from 'react-native-linear-gradient';
+import {Picker} from '@react-native-picker/picker';
+import {getMonthYearHomeChart} from '../../services/timeServices';
 
 const Home = () => {
   useStatusBar('white');
@@ -73,6 +75,8 @@ const Home = () => {
 };
 
 const ChartView: React.FC = () => {
+  const [selectedMonth, setSelectedMonth] = useState('current');
+
   return (
     <View style={{marginVertical: vh(2), rowGap: vh(2)}}>
       <View
@@ -92,9 +96,42 @@ const ChartView: React.FC = () => {
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
+            alignItems: 'center',
           }}>
-            {/* render here */}
+          <Picker
+            dropdownIconColor={'#6E778B'}
+            selectedValue={selectedMonth}
+            style={{
+              width: vw(34),
+              color: '#272727',
+            }}
+            onValueChange={itemValue => setSelectedMonth(itemValue)}>
+            <Picker.Item label={getMonthYearHomeChart(-1)} value="previous" />
+            <Picker.Item label={getMonthYearHomeChart(0)} value="current" />
+            <Picker.Item label={getMonthYearHomeChart(1)} value="next" />
+          </Picker>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'flex-start',
+              justifyContent: 'flex-start',
+              backgroundColor: '#FFD9D9',
+              padding: vw(1),
+              borderRadius: 4,
+            }}>
+            <View
+              style={{
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start',
+              }}>
+              {increasingIcon(vw(5), vw(5))}
+            </View>
+            <Text style={{color: '#AC3939', alignSelf: 'flex-start'}}>
+              {' '}
+              12%
+            </Text>
           </View>
+        </View>
       </View>
     </View>
   );
@@ -243,7 +280,7 @@ const styles = StyleSheet.create({
   },
   chartViewContainer: {
     marginHorizontal: vw(5),
-    padding: vw(5),
+    paddingHorizontal: vw(3),
     backgroundColor: 'white',
     borderRadius: 12,
     shadowColor: '#000',
