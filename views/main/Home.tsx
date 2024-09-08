@@ -77,7 +77,7 @@ const Home = () => {
 
 const ChartView: React.FC = () => {
   const [selectedMonth, setSelectedMonth] = useState('current');
-  const chartData = GenerateChartHomeData();
+  const chartData = GenerateChartHomeData(selectedMonth);
 
   return (
     <View style={{marginVertical: vh(2), rowGap: vh(2)}}>
@@ -108,9 +108,10 @@ const ChartView: React.FC = () => {
               color: '#272727',
             }}
             onValueChange={itemValue => setSelectedMonth(itemValue)}>
-            <Picker.Item label={getMonthYearHomeChart(-1)} value="previous" />
             <Picker.Item label={getMonthYearHomeChart(0)} value="current" />
-            <Picker.Item label={getMonthYearHomeChart(1)} value="next" />
+            <Picker.Item label={getMonthYearHomeChart(-1)} value="previous1" />
+            <Picker.Item label={getMonthYearHomeChart(-2)} value="previous2" />
+            <Picker.Item label={getMonthYearHomeChart(-3)} value="previous3" />
           </Picker>
           <View
             style={{
@@ -135,33 +136,36 @@ const ChartView: React.FC = () => {
           </View>
         </View>
         {/* Chart here*/}
-        <LineChart
-          isAnimated
-          curved={true}
-          thickness={2}
-          color="#3E3792"
-          noOfSections={4}
-          animateOnDataChange
-          animationDuration={1000}
-          onDataChangeAnimationDuration={300}
-          areaChart
-          yAxisLabelWidth={vw(15)}
-          yAxisTextStyle={{color: '#6E778B'}}
-          xAxisLabelTextStyle={{color: '#6E778B'}}
-          data={chartData}
-          hideDataPoints
-          startFillColor={'rgb(163,189,251)'}
-          endFillColor={'rgb(244,248,254)'}
-          startOpacity={0.8}
-          endOpacity={0.2}
-          spacing={33}
-          backgroundColor="white"
-          rulesColor="gray"
-          rulesType="dashed"
-          yAxisColor="transparent"
-          xAxisColor="transparent"
-          initialSpacing={15}
-        />
+        <View style={{height: vh(30)}}>
+          <ScrollView horizontal>
+            <LineChart
+              isAnimated
+              curved={true}
+              thickness={2}
+              color="#3E3792"
+              noOfSections={4}
+              animateOnDataChange
+              animationDuration={1000}
+              onDataChangeAnimationDuration={300}
+              areaChart
+              yAxisLabelWidth={vw(15)}
+              yAxisTextStyle={{color: '#6E778B'}}
+              xAxisLabelTextStyle={{color: '#6E778B'}}
+              data={chartData}
+              hideDataPoints
+              startFillColor={'rgb(163,189,251)'}
+              endFillColor={'rgb(244,248,254)'}
+              startOpacity={0.8}
+              endOpacity={0.2}
+              backgroundColor="white"
+              rulesColor="gray"
+              rulesType="dashed"
+              yAxisColor="transparent"
+              xAxisColor="transparent"
+              initialSpacing={15}
+            />
+          </ScrollView>
+        </View>
       </View>
     </View>
   );
@@ -318,5 +322,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5, // For Android
+    overflow: 'hidden',
+    marginBottom: vh(2),
   },
 });
