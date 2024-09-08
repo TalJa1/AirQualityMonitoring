@@ -15,10 +15,11 @@ import HeaderComponent from '../../components/HeaderComponent';
 import GradientBackground from '../../components/GradientBackground';
 import useStatusBar from '../../services/useStatusBarCustom';
 import {homeInfoIcon, increasingIcon, upIcon} from '../../assets/svgXml';
-import {AQIDetailsData} from '../../services/renderData';
+import {AQIDetailsData, GenerateChartHomeData} from '../../services/renderData';
 import LinearGradient from 'react-native-linear-gradient';
 import {Picker} from '@react-native-picker/picker';
 import {getMonthYearHomeChart} from '../../services/timeServices';
+import {LineChart} from 'react-native-gifted-charts';
 
 const Home = () => {
   useStatusBar('white');
@@ -76,6 +77,7 @@ const Home = () => {
 
 const ChartView: React.FC = () => {
   const [selectedMonth, setSelectedMonth] = useState('current');
+  const chartData = GenerateChartHomeData();
 
   return (
     <View style={{marginVertical: vh(2), rowGap: vh(2)}}>
@@ -132,6 +134,34 @@ const ChartView: React.FC = () => {
             </Text>
           </View>
         </View>
+        {/* Chart here*/}
+        <LineChart
+          isAnimated
+          curved={true}
+          thickness={2}
+          color="#3E3792"
+          noOfSections={4}
+          animateOnDataChange
+          animationDuration={1000}
+          onDataChangeAnimationDuration={300}
+          areaChart
+          yAxisLabelWidth={vw(15)}
+          yAxisTextStyle={{color: '#6E778B'}}
+          xAxisLabelTextStyle={{color: '#6E778B'}}
+          data={chartData}
+          hideDataPoints
+          startFillColor={'rgb(163,189,251)'}
+          endFillColor={'rgb(244,248,254)'}
+          startOpacity={0.8}
+          endOpacity={0.2}
+          spacing={33}
+          backgroundColor="white"
+          rulesColor="gray"
+          rulesType="dashed"
+          yAxisColor="transparent"
+          xAxisColor="transparent"
+          initialSpacing={15}
+        />
       </View>
     </View>
   );

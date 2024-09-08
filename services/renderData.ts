@@ -34,3 +34,21 @@ export const AQIDetailsData = [
     label: 'Wind speed',
   },
 ];
+
+export const GenerateChartHomeData = () => {
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth();
+
+  const labels = [];
+  const data = [];
+
+  for (let i = 1; i <= currentDate.getDate(); i++) {
+    labels.push(`${i}/${currentMonth + 1}`);
+    data.push({
+      value: Math.floor(Math.random() * 100) + 51, // Ensures value is between 51 and 150
+      label: `${i}/${currentMonth + 1}`,
+    });
+  }
+
+  return data;
+};
