@@ -67,12 +67,17 @@ const Home = () => {
               <AQIDetails />
             </Animated.View>
             <ChartView />
+            <SliderView />
           </View>
           {/* end here */}
         </ScrollView>
       </SafeAreaView>
     </GradientBackground>
   );
+};
+
+const SliderView: React.FC = () => {
+  return <View></View>;
 };
 
 const ChartView: React.FC = () => {

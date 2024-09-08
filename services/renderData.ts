@@ -70,3 +70,26 @@ export const GenerateChartHomeData = (value: string) => {
 
   return data;
 };
+
+export const SliderBottomSaveTabData = [
+  {
+    img: require('../assets/home/slider1.png'),
+    title: 'Overwhelming Heat:',
+    description: "This Week's Weather Forecast",
+  },
+  {
+    img: require('../assets/home/slider2.png'),
+    title: 'Summer Weather Forecast:',
+    description: 'Heat Warning',
+  },
+  {
+    img: require('../assets/home/slider3.png'),
+    title: 'Weekend Weather Forecast:',
+    description: 'Localized Thunderstorms',
+  },
+  {
+    img: require('../assets/home/slider4.png'),
+    title: 'Seasonal Weather: Climate:',
+    description: 'Changes, How to Adapt',
+  },
+];
