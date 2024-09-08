@@ -9,6 +9,17 @@ export const test = (w?: any, h?: any, color?: any) => {
   return <SvgXml xml={xml} width={w} height={h} />;
 };
 
+export const homeInfoIcon = (w?: any, h?: any, color?: any) => {
+  const xml = `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10 5.01001V5.00002M10 15L10 8M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z" stroke=${
+    color ?? '#6E778B'
+  } stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+  return <SvgXml xml={xml} width={w} height={h} />;
+};
+
 export const humidityIcon = (w?: any, h?: any, color?: any) => {
   const xml = `<svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M5.70252 10.927C5.83245 10.1475 6.76221 6.45675 6.76221 6.45675C6.76221 6.45675 8.82068 9.75773 9.21045 10.927C9.58639 12.0549 8.75597 13.2656 7.41751 13.2656C6.07905 13.2657 5.5726 11.7066 5.70252 10.927Z" stroke="#3E3792"/>

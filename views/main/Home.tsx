@@ -17,6 +17,7 @@ import useStatusBar from '../../services/useStatusBarCustom';
 import {increasingIcon, upIcon} from '../../assets/svgXml';
 import {AQIDetailsData} from '../../services/renderData';
 import LinearGradient from 'react-native-linear-gradient';
+import {BarChart} from 'react-native-gifted-charts';
 
 const Home = () => {
   useStatusBar('white');
@@ -43,6 +44,7 @@ const Home = () => {
             subtitle="Hoan Kiem, Hanoi"
             isBack={false}
           />
+          {/* Render main content */}
           <View style={{flex: 1, alignItems: 'center'}}>
             <AQIMain toggleSlide={toggleSlide} />
             <Animated.View
@@ -62,11 +64,17 @@ const Home = () => {
               }}>
               <AQIDetails />
             </Animated.View>
+            <ChartView />
           </View>
+          {/* end here */}
         </ScrollView>
       </SafeAreaView>
     </GradientBackground>
   );
+};
+
+const ChartView: React.FC = () => {
+  return <View></View>;
 };
 
 const AQIDetails: React.FC = () => {
