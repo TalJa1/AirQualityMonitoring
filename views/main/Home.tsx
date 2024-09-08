@@ -14,10 +14,9 @@ import {centerAll, containerStyle, vh, vw} from '../../services/styleSheet';
 import HeaderComponent from '../../components/HeaderComponent';
 import GradientBackground from '../../components/GradientBackground';
 import useStatusBar from '../../services/useStatusBarCustom';
-import {increasingIcon, upIcon} from '../../assets/svgXml';
+import {homeInfoIcon, increasingIcon, upIcon} from '../../assets/svgXml';
 import {AQIDetailsData} from '../../services/renderData';
 import LinearGradient from 'react-native-linear-gradient';
-import {BarChart} from 'react-native-gifted-charts';
 
 const Home = () => {
   useStatusBar('white');
@@ -74,7 +73,31 @@ const Home = () => {
 };
 
 const ChartView: React.FC = () => {
-  return <View></View>;
+  return (
+    <View style={{marginVertical: vh(2), rowGap: vh(2)}}>
+      <View
+        style={{
+          justifyContent: 'space-between',
+          width: '100%',
+          flexDirection: 'row',
+          paddingHorizontal: vw(5),
+        }}>
+        <Text style={{color: '#272727', fontSize: 16, fontWeight: '700'}}>
+          AQI Chart
+        </Text>
+        {homeInfoIcon(vw(6), vw(6))}
+      </View>
+      <View style={styles.chartViewContainer}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}>
+            {/* render here */}
+          </View>
+      </View>
+    </View>
+  );
 };
 
 const AQIDetails: React.FC = () => {
@@ -217,5 +240,16 @@ const styles = StyleSheet.create({
     color: '#6E778B',
     flexWrap: 'wrap',
     textAlign: 'center',
+  },
+  chartViewContainer: {
+    marginHorizontal: vw(5),
+    padding: vw(5),
+    backgroundColor: 'white',
+    borderRadius: 12,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5, // For Android
   },
 });
