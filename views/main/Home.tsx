@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   View,
   Easing,
+  Image,
+  Dimensions,
 } from 'react-native';
 import React, {useRef, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -15,7 +17,11 @@ import HeaderComponent from '../../components/HeaderComponent';
 import GradientBackground from '../../components/GradientBackground';
 import useStatusBar from '../../services/useStatusBarCustom';
 import {homeInfoIcon, increasingIcon, upIcon} from '../../assets/svgXml';
-import {AQIDetailsData, GenerateChartHomeData} from '../../services/renderData';
+import {
+  AQIDetailsData,
+  GenerateChartHomeData,
+  SliderBottomSaveTabData,
+} from '../../services/renderData';
 import LinearGradient from 'react-native-linear-gradient';
 import {Picker} from '@react-native-picker/picker';
 import {getMonthYearHomeChart} from '../../services/timeServices';
@@ -40,7 +46,8 @@ const Home = () => {
   return (
     <GradientBackground>
       <SafeAreaView style={{flex: 1}}>
-        <ScrollView contentContainerStyle={{rowGap: vh(2)}}>
+        <ScrollView
+          contentContainerStyle={{rowGap: vh(2), paddingBottom: vh(2)}}>
           <HeaderComponent
             title="Location"
             subtitle="Hoan Kiem, Hanoi"
@@ -77,7 +84,63 @@ const Home = () => {
 };
 
 const SliderView: React.FC = () => {
-  return <View></View>;
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const scrollX = new Animated.Value(0);
+  const handleScroll = (event: any) => {
+    const slideSize = event.nativeEvent.layoutMeasurement.width;
+    const index = Math.floor(event.nativeEvent.contentOffset.x / slideSize);
+    setCurrentIndex(index);
+  };
+  return (
+    <View style={styles.sliderContainer}>
+      <Animated.ScrollView
+        horizontal
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+        contentContainerStyle={{alignItems: 'center'}}>
+        {SliderBottomSaveTabData.map((item, index) => {
+          const inputRange = [
+            (index - 1) * Dimensions.get('window').width,
+            index * Dimensions.get('window').width,
+            (index + 1) * Dimensions.get('window').width,
+          ];
+
+          const scale = scrollX.interpolate({
+            inputRange,
+            outputRange: [0.8, 1, 0.8],
+            extrapolate: 'clamp',
+          });
+
+          const opacity = scrollX.interpolate({
+            inputRange,
+            outputRange: [0.5, 1, 0.5],
+            extrapolate: 'clamp',
+          });
+
+          return (
+            <Animated.View
+              key={index}
+              style={[styles.imageContainer, {transform: [{scale}], opacity}]}>
+              <Image source={item.img} style={styles.image} />
+            </Animated.View>
+          );
+        })}
+      </Animated.ScrollView>
+      <View style={styles.pagination}>
+        {SliderBottomSaveTabData.map((_, index) => (
+          <View
+            key={index}
+            style={[
+              styles.paginationDot,
+              currentIndex === index ? styles.activeDot : styles.inactiveDot,
+            ]}
+          />
+        ))}
+      </View>
+    </View>
+  );
 };
 
 const ChartView: React.FC = () => {
@@ -329,5 +392,38 @@ const styles = StyleSheet.create({
     elevation: 5, // For Android
     overflow: 'hidden',
     marginBottom: vh(2),
+  },
+  sliderContainer: {
+    height: 200, // Adjust the height as needed
+  },
+  imageContainer: {
+    width: Dimensions.get('window').width,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  image: {
+    width: '80%',
+    height: '80%',
+    resizeMode: 'cover',
+  },
+  pagination: {
+    position: 'absolute',
+    bottom: 10,
+    left: 0,
+    right: 0,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  paginationDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    marginHorizontal: 4,
+  },
+  activeDot: {
+    backgroundColor: '#3E3792',
+  },
+  inactiveDot: {
+    backgroundColor: '#CCCED5',
   },
 });

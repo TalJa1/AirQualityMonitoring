@@ -18,73 +18,71 @@ const Tab = createBottomTabNavigator();
 const App = () => {
   const TabNavigator = () => {
     return (
-      <View style={styles.tabContainer}>
-        <Tab.Navigator
-          initialRouteName="Home"
-          screenOptions={{
-            tabBarActiveTintColor: '#3E3792',
-            tabBarInactiveTintColor: '#6E778B',
-            tabBarShowLabel: true,
-            tabBarStyle: styles.tabBar,
-            tabBarLabelStyle: styles.tabBarLabel,
-          }}>
-          <Tab.Screen
-            name="Home"
-            component={Home}
-            options={{
-              headerShown: false,
-              tabBarIcon: ({color, focused}) => {
-                const iconSize = focused ? vw(7) : vw(6);
-                return (
-                  <View>
-                    {focused && <View style={styles.activeLine} />}
-                    {homeIcon(iconSize, iconSize, color)}
-                  </View>
-                );
-              },
-            }}
-          />
-          <Tab.Screen
-            name="Rank"
-            component={Rank}
-            options={{
-              headerShown: false,
-              tabBarIcon: ({color, focused}) => {
-                const iconSize = focused ? vw(7) : vw(6);
-                return (
-                  <View>
-                    {focused && <View style={styles.activeLine} />}
-                    {rankIcon(iconSize, iconSize, color)}
-                  </View>
-                );
-              },
-            }}
-          />
-          <Tab.Screen
-            name="Map"
-            component={Map}
-            options={{
-              headerShown: false,
-              tabBarIcon: ({color, focused}) => {
-                const iconSize = focused ? vw(7) : vw(6);
-                return (
-                  <View>
-                    {focused && <View style={styles.activeLine} />}
-                    {mapIcon(iconSize, iconSize, color)}
-                  </View>
-                );
-              },
-            }}
-          />
-        </Tab.Navigator>
-      </View>
+      <Tab.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          tabBarActiveTintColor: '#3E3792',
+          tabBarInactiveTintColor: '#6E778B',
+          tabBarShowLabel: true,
+          tabBarStyle: styles.tabBar,
+          tabBarLabelStyle: styles.tabBarLabel,
+        }}>
+        <Tab.Screen
+          name="Home"
+          component={Home}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({color, focused}) => {
+              const iconSize = focused ? vw(7) : vw(6);
+              return (
+                <View>
+                  {focused && <View style={styles.activeLine} />}
+                  {homeIcon(iconSize, iconSize, color)}
+                </View>
+              );
+            },
+          }}
+        />
+        <Tab.Screen
+          name="Rank"
+          component={Rank}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({color, focused}) => {
+              const iconSize = focused ? vw(7) : vw(6);
+              return (
+                <View>
+                  {focused && <View style={styles.activeLine} />}
+                  {rankIcon(iconSize, iconSize, color)}
+                </View>
+              );
+            },
+          }}
+        />
+        <Tab.Screen
+          name="Map"
+          component={Map}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({color, focused}) => {
+              const iconSize = focused ? vw(7) : vw(6);
+              return (
+                <View>
+                  {focused && <View style={styles.activeLine} />}
+                  {mapIcon(iconSize, iconSize, color)}
+                </View>
+              );
+            },
+          }}
+        />
+      </Tab.Navigator>
     );
   };
 
   return (
     <NavigationContainer>
       {/* Main || Login */}
-      <Stack.Navigator initialRouteName="Home1">
+      <Stack.Navigator initialRouteName="Main">
         {/* Main layout with 3 bottom tabs */}
         <Stack.Screen
           name="Main"
@@ -92,11 +90,6 @@ const App = () => {
           options={{headerShown: false}}
         />
         {/* end here */}
-        <Stack.Screen
-          name="Home1"
-          component={Home}
-          options={{headerShown: false}}
-        />
         <Stack.Screen
           name="Onboarding"
           component={Onboarding}
@@ -113,21 +106,19 @@ const App = () => {
 };
 
 const styles = StyleSheet.create({
-  tabContainer: {
-    position: 'absolute',
-    bottom: vh(2),
-    left: vw(5),
-    right: vw(5),
-    borderRadius: 12,
-    shadowColor: '#E8E9F6',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.15,
-    shadowRadius: 3.84,
-  },
   tabBar: {
     height: vh(8),
     borderRadius: 12,
     paddingVertical: vh(1),
+    position: 'absolute',
+    bottom: vh(2),
+    left: vw(5),
+    right: vw(5),
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.15,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   tabBarLabel: {
     fontSize: 12,
