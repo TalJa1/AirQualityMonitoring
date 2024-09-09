@@ -1,20 +1,37 @@
-import {StyleSheet, View} from 'react-native';
-import React from 'react';
+import {StyleSheet, View, ViewToken} from 'react-native';
+import React, {useRef, useState} from 'react';
 import SliderItem from './SliderItem';
 import {ImgSliderList} from '../../services/typeProps';
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
 } from 'react-native-reanimated';
+import SliderPagination from './SliderPagination';
 
 const Slider: React.FC<ImgSliderList> = ({itemList}) => {
   const scrollX = useSharedValue(0);
+  const [paginationIndex, setPaginationIndex] = useState(0);
 
   const onScrollHandler = useAnimatedScrollHandler({
     onScroll: event => {
       scrollX.value = event.contentOffset.x;
     },
   });
+
+  const onViewableItemsChanged = ({viewableItems}: {viewableItems: ViewToken[]}) => {
+    if (viewableItems[0].index !== undefined && viewableItems[0].index !== null) {
+      setPaginationIndex(viewableItems[0].index);
+    }
+  };
+
+  const viewabilityConfig = {
+    itemVisiblePercentThreshold: 50,
+  };
+
+  const viewabilityConfigCallbackPairs = useRef([
+    {viewabilityConfig, onViewableItemsChanged},
+  ]);
+
   return (
     <View>
       <Animated.FlatList
@@ -23,9 +40,15 @@ const Slider: React.FC<ImgSliderList> = ({itemList}) => {
         pagingEnabled
         data={itemList}
         onScroll={onScrollHandler}
+        viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
         renderItem={({item, index}) => (
           <SliderItem index={index} item={item} scrollX={scrollX} />
         )}
+      />
+      <SliderPagination
+        items={itemList}
+        scrollX={scrollX}
+        paginationIndex={paginationIndex}
       />
     </View>
   );

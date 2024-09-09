@@ -38,3 +38,9 @@ export interface ImageSliderPropsComponent {
 export type ImgSliderList = {
   itemList: ImageSliderType[];
 };
+
+export interface PaginationSliderPropsComponent {
+  items: ImageSliderType[];
+  paginationIndex: number;
+  scrollX: SharedValue<number>;
+}
