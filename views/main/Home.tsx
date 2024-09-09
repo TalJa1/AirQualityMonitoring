@@ -15,7 +15,12 @@ import {centerAll, TAB_BAR_HEIGHT, vh, vw} from '../../services/styleSheet';
 import HeaderComponent from '../../components/HeaderComponent';
 import GradientBackground from '../../components/GradientBackground';
 import useStatusBar from '../../services/useStatusBarCustom';
-import {homeInfoIcon, increasingIcon, upIcon} from '../../assets/svgXml';
+import {
+  desceasingIcon,
+  homeInfoIcon,
+  increasingIcon,
+  upIcon,
+} from '../../assets/svgXml';
 import {
   AQIDetailsData,
   GenerateChartHomeData,
@@ -127,7 +132,10 @@ const ChartView: React.FC = () => {
               flexDirection: 'row',
               alignItems: 'flex-start',
               justifyContent: 'flex-start',
-              backgroundColor: '#FFD9D9',
+              backgroundColor:
+                chartData.increaseOrDecrease === 'increase'
+                  ? '#FFD9D9'
+                  : '#D6FFEC',
               padding: vw(1),
               borderRadius: 4,
             }}>
@@ -136,11 +144,20 @@ const ChartView: React.FC = () => {
                 justifyContent: 'flex-start',
                 alignItems: 'flex-start',
               }}>
-              {increasingIcon(vw(5), vw(5))}
+              {chartData.increaseOrDecrease === 'increase'
+                ? increasingIcon(vw(5), vw(5))
+                : desceasingIcon(vw(5), vw(5))}
             </View>
-            <Text style={{color: '#AC3939', alignSelf: 'flex-start'}}>
+            <Text
+              style={{
+                color:
+                  chartData.increaseOrDecrease === 'increase'
+                    ? '#AC3939'
+                    : '#1BA564',
+                alignSelf: 'flex-start',
+              }}>
               {' '}
-              12%
+              {chartData.randomNumber}%
             </Text>
           </View>
         </View>
@@ -160,7 +177,7 @@ const ChartView: React.FC = () => {
               yAxisLabelWidth={vw(15)}
               yAxisTextStyle={{color: '#6E778B'}}
               xAxisLabelTextStyle={{color: '#6E778B'}}
-              data={chartData}
+              data={chartData.data}
               hideDataPoints
               startFillColor={'rgb(163,189,251)'}
               endFillColor={'rgb(244,248,254)'}

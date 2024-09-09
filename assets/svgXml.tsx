@@ -9,6 +9,17 @@ export const test = (w?: any, h?: any, color?: any) => {
   return <SvgXml xml={xml} width={w} height={h} />;
 };
 
+export const desceasingIcon = (w?: any, h?: any, color?: any) => {
+  const xml = `<svg width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M19 11L12.4142 4.41421C11.6332 3.63316 10.3668 3.63317 9.58579 4.41421L8.41421 5.58579C7.63316 6.36684 6.36683 6.36683 5.58579 5.58579L1 1M19 11H13M19 11V5" stroke=${
+    color ?? '#1BA564'
+  } stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+  return <SvgXml xml={xml} width={w} height={h} />;
+};
+
 export const saveIcon = (w?: any, h?: any, color?: any) => {
   const xml = `<svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M1 5C1 2.18536 3 1 7 1C11 1 13 2.18537 13 5V16.0858C13 16.9767 11.9229 17.4229 11.2929 16.7929L7.70711 13.2071C7.31658 12.8166 6.68342 12.8166 6.29289 13.2071L2.70711 16.7929C2.07714 17.4229 1 16.9767 1 16.0858V5Z" stroke=${
