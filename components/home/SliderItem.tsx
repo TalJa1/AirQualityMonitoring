@@ -77,6 +77,6 @@ const styles = StyleSheet.create({
     paddingVertical: vh(1),
     borderRadius: 10,
     position: 'absolute',
-    top: vh(16),
+    bottom: 0,
   },
 });

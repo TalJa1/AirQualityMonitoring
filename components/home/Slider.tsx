@@ -43,17 +43,21 @@ const Slider: React.FC<ImgSliderList> = ({itemList}) => {
 
   return (
     <View style={{flex: 1}}>
-      <Animated.FlatList
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        pagingEnabled
-        data={itemList}
-        onScroll={onScrollHandler}
-        viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
-        renderItem={({item, index}) => (
-          <SliderItem index={index} item={item} scrollX={scrollX} />
-        )}
-      />
+      <View>
+        <Animated.FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          pagingEnabled
+          data={itemList}
+          onScroll={onScrollHandler}
+          viewabilityConfigCallbackPairs={
+            viewabilityConfigCallbackPairs.current
+          }
+          renderItem={({item, index}) => (
+            <SliderItem index={index} item={item} scrollX={scrollX} />
+          )}
+        />
+      </View>
       <SliderPagination
         items={itemList}
         scrollX={scrollX}
