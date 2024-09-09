@@ -44,3 +44,8 @@ export interface PaginationSliderPropsComponent {
   paginationIndex: number;
   scrollX: SharedValue<number>;
 }
+
+export interface GradientBackgroundProps {
+  children: React.ReactNode;
+  colors: string[];
+}

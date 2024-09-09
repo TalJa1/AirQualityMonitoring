@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import {
   Animated,
@@ -38,8 +39,8 @@ const Home = () => {
   useStatusBar('white');
   const slideAnim = useRef(new Animated.Value(0)).current; // Initial value for sliding animation
   const [isSlidUp, setIsSlidUp] = useState(false); // State to track if the view is slid up
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [pageSubTitle, setPageSubTitle] = useState('Hoan Kiem, Hanoi');
+  const [aqiIndex, setAqiIndex] = useState(176);
 
   const toggleSlide = () => {
     Animated.timing(slideAnim, {
@@ -53,8 +54,8 @@ const Home = () => {
   };
 
   return (
-    <GradientBackground>
-      <SafeAreaView style={[{flex: 1}]}>
+    <GradientBackground colors={['white', '#E5FAFD']}>
+      <SafeAreaView style={{flex: 1}}>
         <ScrollView contentContainerStyle={{rowGap: vh(2)}}>
           <HeaderComponent
             title="Location"
@@ -63,7 +64,11 @@ const Home = () => {
           />
           {/* Render main content */}
           <View style={{flex: 1, alignItems: 'center'}}>
-            <AQIMain toggleSlide={toggleSlide} subTitle={pageSubTitle} />
+            <AQIMain
+              toggleSlide={toggleSlide}
+              subTitle={pageSubTitle}
+              aqiIndex={aqiIndex}
+            />
             <Animated.View
               style={{
                 backgroundColor: '#F7F9FF',
@@ -217,15 +222,16 @@ const AQIDetails: React.FC = () => {
   );
 };
 
-const AQIMain: React.FC<{toggleSlide: () => void; subTitle: string}> = ({
-  toggleSlide,
-  subTitle,
-}) => {
+const AQIMain: React.FC<{
+  toggleSlide: () => void;
+  subTitle: string;
+  aqiIndex: number;
+}> = ({toggleSlide, subTitle, aqiIndex}) => {
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
   return (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate('Detail', {subTitle: subTitle});
+        navigation.navigate('Detail', {subTitle: subTitle, aqiIndex: aqiIndex});
       }}
       style={{
         flexDirection: 'row',
@@ -252,7 +258,7 @@ const AQIMain: React.FC<{toggleSlide: () => void; subTitle: string}> = ({
         }}>
         <Text style={[styles.txtColor, {fontWeight: '700'}]}>AQI index</Text>
         <Text style={[styles.txtColor, {fontWeight: '700'}]}>Today</Text>
-        <Text style={{color: '#AC3939', fontSize: 32}}>176</Text>
+        <Text style={{color: '#AC3939', fontSize: 32}}>{aqiIndex}</Text>
         <Text style={styles.txtColor}>Detail</Text>
       </View>
       <View

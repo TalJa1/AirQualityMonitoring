@@ -1,8 +1,9 @@
-import React, {useEffect, useRef} from 'react';
-import {Animated, StyleSheet, View} from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { Animated, StyleSheet, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { GradientBackgroundProps } from '../services/typeProps';
 
-const GradientBackground = ({children}: {children: React.ReactNode}) => {
+const GradientBackground: React.FC<GradientBackgroundProps> = ({ children, colors }) => {
   const start = useRef(new Animated.Value(0)).current;
   const end = useRef(new Animated.Value(1)).current;
 
@@ -27,11 +28,11 @@ const GradientBackground = ({children}: {children: React.ReactNode}) => {
 
   return (
     <View style={styles.container}>
-      <Animated.View style={{...StyleSheet.absoluteFillObject}}>
+      <Animated.View style={{ ...StyleSheet.absoluteFillObject }}>
         <LinearGradient
-          colors={['#FFFFFF', '#E9FAFD']}
-          start={{x: 0, y: 0}}
-          end={{x: 1, y: 0}}
+          colors={colors}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
           style={StyleSheet.absoluteFillObject}
         />
       </Animated.View>
