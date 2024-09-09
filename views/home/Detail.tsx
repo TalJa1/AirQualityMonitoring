@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   gridItemKeyText: {
-    fontSize: 14,
+    fontSize: 10,
     fontWeight: '500',
     color: '#333',
   },
