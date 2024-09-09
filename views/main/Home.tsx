@@ -89,7 +89,7 @@ const ChartView: React.FC = () => {
   const chartData = GenerateChartHomeData(selectedMonth);
 
   return (
-    <View style={{marginVertical: vh(2), rowGap: vh(2)}}>
+    <View style={{marginVertical: vh(1), rowGap: vh(2)}}>
       <View
         style={{
           justifyContent: 'space-between',
