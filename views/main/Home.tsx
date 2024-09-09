@@ -76,7 +76,7 @@ const Home = () => {
             {/* <SliderView /> */}
             <Slider itemList={SliderBottomSaveTabData} />
           </View>
-          <View style={{height: TAB_BAR_HEIGHT}} />
+          <View style={{height: TAB_BAR_HEIGHT + vh(1)}} />
           {/* end here */}
         </ScrollView>
       </SafeAreaView>
