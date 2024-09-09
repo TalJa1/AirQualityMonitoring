@@ -17,6 +17,7 @@ import GradientBackground from '../../components/GradientBackground';
 import {arrowNextIcon, backIcon} from '../../assets/svgXml';
 import {AQIDetailData} from '../../services/renderData';
 import dayjs from 'dayjs';
+import LinearGradient from 'react-native-linear-gradient';
 
 const getColorFromAqiIndex = (aqiIndex: number): string => {
   if (aqiIndex <= 50) {
@@ -77,7 +78,10 @@ const Detail = () => {
             data={currentData}
             AQIIndexColor={AQIIndexColor}
           />
-          <AdviseView />
+          <View style={{rowGap: vh(1)}}>
+            <AdviseView />
+            <GeneralView />
+          </View>
         </ScrollView>
       </SafeAreaView>
     </GradientBackground>
@@ -85,7 +89,65 @@ const Detail = () => {
 };
 
 const AdviseView: React.FC = () => {
-  return <View></View>;
+  const data = [
+    'Avoid outdoor activities, especially vigorous physical activities.',
+    'Stay indoors and close windows to prevent polluted air from entering.',
+    'Use an air purifier if possible.',
+  ];
+  return (
+    <View>
+      <View style={styles.adviseContainer}>
+        <View style={styles.adviseTitle}>
+          <Text style={styles.adviseTitleText}>Advise</Text>
+        </View>
+        <LinearGradient
+          colors={['#B0C7F7', 'white']}
+          start={{x: 0, y: 0}}
+          end={{x: 0, y: 1}}
+          style={styles.line}
+        />
+      </View>
+      <View style={{paddingHorizontal: vw(5), marginVertical: vh(2)}}>
+        <Text style={{fontSize: 16, fontWeight: '500', color: '#272727'}}>
+          Prevention measures:
+        </Text>
+        <View style={styles.listContainer}>
+          {data.map((item, index) => (
+            <View key={index} style={styles.listItem}>
+              <Text style={styles.bulletPoint}>{'\u2022'}</Text>
+              <Text style={styles.listItemText}>{item}</Text>
+            </View>
+          ))}
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const GeneralView: React.FC = () => {
+  return (
+    <View>
+      <View style={styles.adviseContainer}>
+        <View style={styles.adviseTitle}>
+          <Text style={styles.adviseTitleText}>General forecast</Text>
+        </View>
+        <LinearGradient
+          colors={['#B0C7F7', 'white']}
+          start={{x: 0, y: 0}}
+          end={{x: 0, y: 1}}
+          style={styles.line}
+        />
+      </View>
+      <View style={{paddingHorizontal: vw(5), marginVertical: vh(2)}}>
+        <Text style={styles.listItemText}>
+          When the AQI is at 150-200, the air has begun to cause harm to health,
+          especially for sensitive people. Following preventative measures and
+          minimizing exposure to air pollution is important to protect the
+          health of you and your family.
+        </Text>
+      </View>
+    </View>
+  );
 };
 
 const CircularDetailView: React.FC<{data: any; AQIIndexColor: string}> = ({
@@ -300,5 +362,49 @@ const styles = StyleSheet.create({
   gridItemText: {
     fontSize: 24,
     fontWeight: '700',
+  },
+  adviseTitle: {
+    backgroundColor: '#3E3792',
+    flexShrink: 1,
+    alignItems: 'flex-start',
+    alignSelf: 'flex-start',
+    borderTopRightRadius: 12,
+    borderBottomRightRadius: 12,
+    paddingHorizontal: vw(3),
+    paddingVertical: vw(1.5),
+  },
+  adviseTitleText: {
+    color: '#FCFCFC',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  adviseContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+  },
+  line: {
+    flex: 1,
+    height: 4,
+  },
+  listContainer: {
+    marginTop: vw(2),
+  },
+  listItem: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginVertical: vw(1),
+  },
+  bulletPoint: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginRight: vw(2),
+    color: '#6E778B',
+  },
+  listItemText: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#6E778B',
+    lineHeight: 22,
   },
 });
