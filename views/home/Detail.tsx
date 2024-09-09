@@ -77,10 +77,15 @@ const Detail = () => {
             data={currentData}
             AQIIndexColor={AQIIndexColor}
           />
+          <AdviseView />
         </ScrollView>
       </SafeAreaView>
     </GradientBackground>
   );
+};
+
+const AdviseView: React.FC = () => {
+  return <View></View>;
 };
 
 const CircularDetailView: React.FC<{data: any; AQIIndexColor: string}> = ({
@@ -261,7 +266,7 @@ const styles = StyleSheet.create({
     padding: vw(1.5),
     borderTopRightRadius: vw(2),
     borderTopLeftRadius: vw(2),
-    shadowColor: '#000',
+    shadowColor: '#3E3792',
     shadowOffset: {width: 0, height: -2}, // Shadow offset (no bottom shadow)
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
@@ -276,7 +281,7 @@ const styles = StyleSheet.create({
     paddingVertical: vw(3),
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
+    shadowColor: '#3E3792',
     shadowOffset: {width: 0, height: 2}, // Shadow offset (no top shadow)
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
