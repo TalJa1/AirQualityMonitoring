@@ -7,7 +7,7 @@ import Animated, {
   interpolate,
   useAnimatedStyle,
 } from 'react-native-reanimated';
-import {vh} from '../../services/styleSheet';
+import {vh, vw} from '../../services/styleSheet';
 
 const {width} = Dimensions.get('window');
 
@@ -59,6 +59,7 @@ export default SliderPagination;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+    columnGap: vw(1),
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: vh(1),
