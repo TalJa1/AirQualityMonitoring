@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, View, ViewToken} from 'react-native';
 import React, {useRef, useState} from 'react';
 import SliderItem from './SliderItem';
@@ -18,8 +19,16 @@ const Slider: React.FC<ImgSliderList> = ({itemList}) => {
     },
   });
 
-  const onViewableItemsChanged = ({viewableItems}: {viewableItems: ViewToken[]}) => {
-    if (viewableItems[0].index !== undefined && viewableItems[0].index !== null) {
+  const onViewableItemsChanged = ({
+    viewableItems,
+  }: {
+    viewableItems: ViewToken[];
+  }) => {
+    if (
+      viewableItems.length > 0 &&
+      viewableItems[0].index !== undefined &&
+      viewableItems[0].index !== null
+    ) {
       setPaginationIndex(viewableItems[0].index);
     }
   };
@@ -33,7 +42,7 @@ const Slider: React.FC<ImgSliderList> = ({itemList}) => {
   ]);
 
   return (
-    <View>
+    <View style={{flex: 1}}>
       <Animated.FlatList
         horizontal
         showsHorizontalScrollIndicator={false}

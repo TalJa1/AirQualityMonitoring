@@ -7,6 +7,7 @@ import Animated, {
   interpolate,
   useAnimatedStyle,
 } from 'react-native-reanimated';
+import {vh} from '../../services/styleSheet';
 
 const {width} = Dimensions.get('window');
 
@@ -43,7 +44,7 @@ const SliderPagination: React.FC<PaginationSliderPropsComponent> = ({
               pgAnimatedStyle,
               {
                 backgroundColor:
-                  paginationIndex === index ? '#FCFCFC' : '#6E778B',
+                  paginationIndex === index ? '#3E3792' : '#6E778B',
               },
             ]}
           />
@@ -60,6 +61,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 60,
+    marginTop: vh(1),
   },
 });
