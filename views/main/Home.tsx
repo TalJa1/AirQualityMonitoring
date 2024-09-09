@@ -31,11 +31,15 @@ import {Picker} from '@react-native-picker/picker';
 import {getMonthYearHomeChart} from '../../services/timeServices';
 import {LineChart} from 'react-native-gifted-charts';
 import Slider from '../../components/home/Slider';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 const Home = () => {
   useStatusBar('white');
   const slideAnim = useRef(new Animated.Value(0)).current; // Initial value for sliding animation
   const [isSlidUp, setIsSlidUp] = useState(false); // State to track if the view is slid up
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [pageSubTitle, setPageSubTitle] = useState('Hoan Kiem, Hanoi');
 
   const toggleSlide = () => {
     Animated.timing(slideAnim, {
@@ -54,12 +58,12 @@ const Home = () => {
         <ScrollView contentContainerStyle={{rowGap: vh(2)}}>
           <HeaderComponent
             title="Location"
-            subtitle="Hoan Kiem, Hanoi"
+            subtitle={pageSubTitle}
             isBack={false}
           />
           {/* Render main content */}
           <View style={{flex: 1, alignItems: 'center'}}>
-            <AQIMain toggleSlide={toggleSlide} />
+            <AQIMain toggleSlide={toggleSlide} subTitle={pageSubTitle} />
             <Animated.View
               style={{
                 backgroundColor: '#F7F9FF',
@@ -213,9 +217,16 @@ const AQIDetails: React.FC = () => {
   );
 };
 
-const AQIMain: React.FC<{toggleSlide: () => void}> = ({toggleSlide}) => {
+const AQIMain: React.FC<{toggleSlide: () => void; subTitle: string}> = ({
+  toggleSlide,
+  subTitle,
+}) => {
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
   return (
-    <View
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('Detail', {subTitle: subTitle});
+      }}
       style={{
         flexDirection: 'row',
         padding: vw(5),
@@ -300,7 +311,7 @@ const AQIMain: React.FC<{toggleSlide: () => void}> = ({toggleSlide}) => {
         onPress={toggleSlide}>
         {upIcon(vw(5), vw(5), '#3E3792')}
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   );
 };
 

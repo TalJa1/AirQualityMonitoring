@@ -11,6 +11,7 @@ import Home from './views/main/Home';
 import Rank from './views/main/Rank';
 import Map from './views/main/Map';
 import {homeIcon, mapIcon, rankIcon} from './assets/svgXml';
+import Detail from './views/home/Detail';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -90,6 +91,11 @@ const App = () => {
           options={{headerShown: false}}
         />
         {/* end here */}
+        <Stack.Screen
+          name="Detail"
+          component={Detail}
+          options={{headerShown: false}}
+        />
         <Stack.Screen
           name="Onboarding"
           component={Onboarding}
