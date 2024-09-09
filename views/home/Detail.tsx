@@ -73,34 +73,34 @@ const Detail = () => {
             disableBack={isToday}
             disableNext={isLastIndex}
           />
-          <CircularDetailView
-            data={currentData}
-            AQIIndexColor={AQIIndexColor}
-          />
+          <CircularDetailView data={currentData} AQIIndexColor={AQIIndexColor}/>
         </ScrollView>
       </SafeAreaView>
     </GradientBackground>
   );
 };
 
-const CircularDetailView: React.FC<{data: any; AQIIndexColor: string}> = ({
-  data,
-  AQIIndexColor,
-}) => {
+const CircularDetailView: React.FC<{data: any, AQIIndexColor: string}> = ({data, AQIIndexColor}) => {
   const renderData = Object.entries(data).filter(
     ([key]) => key !== 'aqiIndex' && key !== 'img',
   );
 
   return (
     <View style={styles.gridContainer}>
-      {renderData.map(([key, value], index) => (
-        <View key={index} style={styles.gridItem}>
-          <Text style={styles.gridItemKeyText}>{key}</Text>
-          <Text style={[styles.gridItemText, {color: AQIIndexColor}]}>
-            ~{String(value)}
-          </Text>
-        </View>
-      ))}
+      {renderData.map(([key, value], index) => {
+        const [mainText, bracketText] = key.split('(');
+        return (
+          <View key={index} style={styles.gridItem}>
+            <Text style={styles.gridItemKeyText}>
+              {mainText}
+              {bracketText && (
+                <Text style={styles.gridItemBracketText}>({bracketText}</Text>
+              )}
+            </Text>
+            <Text style={[styles.gridItemText, {color: AQIIndexColor}]}>~{String(value)}</Text>
+          </View>
+        );
+      })}
     </View>
   );
 };
@@ -223,8 +223,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   gridItemKeyText: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#333',
+  },
+  gridItemBracketText: {
     fontSize: 10,
-    fontWeight: '700',
+    fontWeight: '400',
     color: '#4C4C4C',
   },
   gridItemText: {
