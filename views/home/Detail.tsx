@@ -1,8 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {centerAll, containerStyle, vw} from '../../services/styleSheet';
+import {centerAll, containerStyle, vh, vw} from '../../services/styleSheet';
 import HeaderComponent from '../../components/HeaderComponent';
 import {useRoute} from '@react-navigation/native';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
@@ -29,10 +29,10 @@ const Detail = () => {
 
 const CircularProgressView: React.FC<{aqiIndex: number}> = ({aqiIndex}) => {
   return (
-    <View style={centerAll}>
+    <View style={[centerAll, {marginTop: vh(3)}]}>
       <AnimatedCircularProgress
-        size={vw(50)} // Diameter of the circle
-        width={20} // Width of the circle border
+        size={vw(55)} // Diameter of the circle
+        width={15} // Width of the circle border
         fill={1} // Percentage of the circle to fill
         tintColor="#AC3939" // Color of the filled part
         backgroundColor="white" // Color of the unfilled part
@@ -40,7 +40,14 @@ const CircularProgressView: React.FC<{aqiIndex: number}> = ({aqiIndex}) => {
         lineCap="round">
         {_ => (
           <View style={styles.circle}>
-            <Text style={styles.points}>{aqiIndex}</Text>
+            <Image
+              width={vw(10)}
+              height={vw(10)}
+              resizeMode="contain"
+              source={require('../../assets/home/rain.png')}
+            />
+            <Text style={styles.dayTxt}>Today</Text>
+            <Text style={[styles.aqiTxt]}>{aqiIndex}</Text>
           </View>
         )}
       </AnimatedCircularProgress>
@@ -56,5 +63,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  points: {},
+  aqiTxt: {
+    fontSize: 24,
+    fontWeight: '700',
+  },
+  dayTxt: {
+    color: '#6E778B',
+    fontSize: 14,
+    fontWeight: '500',
+  },
 });
