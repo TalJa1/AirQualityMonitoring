@@ -24,7 +24,7 @@ const SliderItem: React.FC<ImageSliderPropsComponent> = ({
           translateX: interpolate(
             scrollX.value,
             [(index - 1) * width, index * width, (index + 1) * width],
-            [-width * 0.25, 0, width * 0.25],
+            [-width * 0.15, 0, width * 0.15],
             Extrapolation.CLAMP,
           ),
         },
@@ -35,7 +35,7 @@ const SliderItem: React.FC<ImageSliderPropsComponent> = ({
     <Animated.View style={[styles.container, rnAnimatedStyle]}>
       <Image
         source={item.img}
-        style={{width: vw(70), height: vh(20), borderRadius: 20}}
+        style={{width: vw(80), height: vh(20), borderRadius: 20}}
       />
       <View style={styles.imgDesContainer}>
         <View style={{rowGap: vh(1)}}>
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: vw(2),
-    width: vw(70),
+    width: vw(80),
     backgroundColor: '#3E3792',
     paddingVertical: vh(1),
     borderRadius: 10,
