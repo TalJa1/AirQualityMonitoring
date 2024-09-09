@@ -1,4 +1,5 @@
 import {ImageSourcePropType} from 'react-native';
+import {SharedValue} from 'react-native-reanimated';
 
 export interface LoginBtnProps {
   title: string;
@@ -31,6 +32,7 @@ export interface ImageSliderType {
 export interface ImageSliderPropsComponent {
   item: ImageSliderType;
   index: number;
+  scrollX: SharedValue<number>;
 }
 
 export type ImgSliderList = {

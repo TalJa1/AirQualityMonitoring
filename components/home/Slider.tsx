@@ -1,17 +1,31 @@
-import {FlatList, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import SliderItem from './SliderItem';
 import {ImgSliderList} from '../../services/typeProps';
+import Animated, {
+  useAnimatedScrollHandler,
+  useSharedValue,
+} from 'react-native-reanimated';
 
 const Slider: React.FC<ImgSliderList> = ({itemList}) => {
+  const scrollX = useSharedValue(0);
+
+  const onScrollHandler = useAnimatedScrollHandler({
+    onScroll: event => {
+      scrollX.value = event.contentOffset.x;
+    },
+  });
   return (
     <View>
-      <FlatList
+      <Animated.FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
         pagingEnabled
         data={itemList}
-        renderItem={({item, index}) => <SliderItem index={index} item={item} />}
+        onScroll={onScrollHandler}
+        renderItem={({item, index}) => (
+          <SliderItem index={index} item={item} scrollX={scrollX} />
+        )}
       />
     </View>
   );
