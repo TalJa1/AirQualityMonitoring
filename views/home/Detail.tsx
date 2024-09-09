@@ -55,6 +55,8 @@ const Detail = () => {
   const currentData = AQIDetailData[currentIndex];
   const AQIIndexColor = getColorFromAqiIndex(currentData.aqiIndex);
   const currentDate = dayjs().add(currentIndex, 'day').format('ddd, MM/DD');
+  const isToday = currentIndex === 0;
+  const isLastIndex = currentIndex === AQIDetailData.length - 1;
 
   return (
     <GradientBackground colors={['white', '#E5FAFD']}>
@@ -65,13 +67,41 @@ const Detail = () => {
             aqiIndex={currentData.aqiIndex}
             AQIIndexColor={AQIIndexColor}
             img={currentData.img}
-            date={currentDate}
+            date={isToday ? 'Today' : currentDate}
             onNext={handleNext}
             onBack={handleBack}
+            disableBack={isToday}
+            disableNext={isLastIndex}
+          />
+          <CircularDetailView
+            data={currentData}
+            AQIIndexColor={AQIIndexColor}
           />
         </ScrollView>
       </SafeAreaView>
     </GradientBackground>
+  );
+};
+
+const CircularDetailView: React.FC<{data: any; AQIIndexColor: string}> = ({
+  data,
+  AQIIndexColor,
+}) => {
+  const renderData = Object.entries(data).filter(
+    ([key]) => key !== 'aqiIndex' && key !== 'img',
+  );
+
+  return (
+    <View style={styles.gridContainer}>
+      {renderData.map(([key, value], index) => (
+        <View key={index} style={styles.gridItem}>
+          <Text style={styles.gridItemKeyText}>{key}</Text>
+          <Text style={[styles.gridItemText, {color: AQIIndexColor}]}>
+            ~{String(value)}
+          </Text>
+        </View>
+      ))}
+    </View>
   );
 };
 
@@ -82,7 +112,18 @@ const CircularProgressView: React.FC<{
   img: any;
   onNext: () => void;
   onBack: () => void;
-}> = ({aqiIndex, AQIIndexColor, date, onNext, onBack, img}) => {
+  disableBack: boolean;
+  disableNext: boolean;
+}> = ({
+  aqiIndex,
+  AQIIndexColor,
+  date,
+  onNext,
+  onBack,
+  img,
+  disableBack,
+  disableNext,
+}) => {
   const fillPercentage = (aqiIndex / 200) * 100;
 
   return (
@@ -93,7 +134,10 @@ const CircularProgressView: React.FC<{
         alignItems: 'center',
         justifyContent: 'space-evenly',
       }}>
-      <TouchableOpacity style={styles.btnCircularStyle} onPress={onBack}>
+      <TouchableOpacity
+        style={[styles.btnCircularStyle, disableBack && styles.disabledButton]}
+        onPress={onBack}
+        disabled={disableBack}>
         {backIcon(vw(7), vw(7), '#D5CFF9')}
       </TouchableOpacity>
       <AnimatedCircularProgress
@@ -119,7 +163,10 @@ const CircularProgressView: React.FC<{
           </View>
         )}
       </AnimatedCircularProgress>
-      <TouchableOpacity style={styles.btnCircularStyle} onPress={onNext}>
+      <TouchableOpacity
+        style={[styles.btnCircularStyle, disableNext && styles.disabledButton]}
+        onPress={onNext}
+        disabled={disableNext}>
         {arrowNextIcon(vw(7), vw(7), '#D5CFF9')}
       </TouchableOpacity>
     </View>
@@ -152,5 +199,36 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25, // Shadow opacity
     shadowRadius: 3.84, // Shadow radius
     elevation: 5, // Elevation for Android
+  },
+  disabledButton: {
+    opacity: 0.5,
+  },
+  gridContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    padding: vw(3),
+  },
+  gridItem: {
+    backgroundColor: 'white',
+    width: '30%',
+    marginVertical: vh(1),
+    padding: vw(2),
+    borderRadius: vw(2),
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    alignItems: 'center',
+  },
+  gridItemKeyText: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#4C4C4C',
+  },
+  gridItemText: {
+    fontSize: 24,
+    fontWeight: '700',
   },
 });
