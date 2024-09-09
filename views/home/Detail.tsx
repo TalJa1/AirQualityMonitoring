@@ -55,7 +55,7 @@ const Detail = () => {
 
   const currentData = AQIDetailData[currentIndex];
   const AQIIndexColor = getColorFromAqiIndex(currentData.aqiIndex);
-  const currentDate = dayjs().add(currentIndex, 'day').format('ddd, MM/DD');
+  const currentDate = dayjs().add(currentIndex, 'day').format('ddd, DD/MM');
   const isToday = currentIndex === 0;
   const isLastIndex = currentIndex === AQIDetailData.length - 1;
 
