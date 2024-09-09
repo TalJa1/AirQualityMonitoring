@@ -32,7 +32,7 @@ const SliderItem: React.FC<ImageSliderPropsComponent> = ({
           scale: interpolate(
             scrollX.value,
             [(index - 1) * width, index * width, (index + 1) * width],
-            [0.9, 1, 0.9],
+            [0.6, 1, 0.6],
             Extrapolation.CLAMP,
           ),
         },
