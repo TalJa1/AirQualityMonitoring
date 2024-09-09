@@ -4,8 +4,11 @@ import React from 'react';
 import {HeaderProps} from '../services/typeProps';
 import {vh, vw} from '../services/styleSheet';
 import {backIcon, headerRightIcon} from '../assets/svgXml';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 const HeaderComponent: React.FC<HeaderProps> = ({isBack, title, subtitle}) => {
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
   return (
     <View style={styles.container}>
       <View
@@ -15,7 +18,11 @@ const HeaderComponent: React.FC<HeaderProps> = ({isBack, title, subtitle}) => {
           paddingVertical: vh(1),
         }}>
         <View>
-          <TouchableOpacity disabled={!isBack} onPress={() => {}}>
+          <TouchableOpacity
+            disabled={!isBack}
+            onPress={() => {
+              navigation.goBack();
+            }}>
             {backIcon(vw(7), vw(7), isBack ? '#6E778B' : 'transparent')}
           </TouchableOpacity>
         </View>

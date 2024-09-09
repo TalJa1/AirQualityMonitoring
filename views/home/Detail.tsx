@@ -21,18 +21,15 @@ const getColorFromAqiIndex = (aqiIndex: number): string => {
     return '#1BA564';
   } // Good
   if (aqiIndex <= 100) {
-    return '#FFFF00';
+    return '#E0D817';
   } // Moderate
   if (aqiIndex <= 150) {
-    return '#FF7E00';
+    return '#C77B21';
   } // Unhealthy for Sensitive Groups
   if (aqiIndex <= 200) {
     return '#AC3939';
   } // Unhealthy
-  if (aqiIndex <= 300) {
-    return '#8F3F97';
-  } // Very Unhealthy
-  return '#7E0023'; // Hazardous
+  return '#AC3939'; // Hazardous
 };
 
 const Detail = () => {
