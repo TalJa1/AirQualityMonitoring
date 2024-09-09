@@ -73,14 +73,20 @@ const Detail = () => {
             disableBack={isToday}
             disableNext={isLastIndex}
           />
-          <CircularDetailView data={currentData} AQIIndexColor={AQIIndexColor}/>
+          <CircularDetailView
+            data={currentData}
+            AQIIndexColor={AQIIndexColor}
+          />
         </ScrollView>
       </SafeAreaView>
     </GradientBackground>
   );
 };
 
-const CircularDetailView: React.FC<{data: any, AQIIndexColor: string}> = ({data, AQIIndexColor}) => {
+const CircularDetailView: React.FC<{data: any; AQIIndexColor: string}> = ({
+  data,
+  AQIIndexColor,
+}) => {
   const renderData = Object.entries(data).filter(
     ([key]) => key !== 'aqiIndex' && key !== 'img',
   );
@@ -91,16 +97,44 @@ const CircularDetailView: React.FC<{data: any, AQIIndexColor: string}> = ({data,
         const [mainText, bracketText] = key.split('(');
         return (
           <View key={index} style={styles.gridItem}>
-            <Text style={styles.gridItemKeyText}>
-              {mainText}
-              {bracketText && (
-                <Text style={styles.gridItemBracketText}>({bracketText}</Text>
-              )}
-            </Text>
-            <Text style={[styles.gridItemText, {color: AQIIndexColor}]}>~{String(value)}</Text>
+            <View
+              style={{alignItems: 'flex-start', justifyContent: 'flex-start'}}>
+              <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                <KeyText mainText={mainText} bracketText={bracketText} />
+              </View>
+            </View>
+            <View style={styles.valueContainer}>
+              <Text style={[styles.gridItemText, {color: AQIIndexColor}]}>
+                ~{String(value)}
+              </Text>
+            </View>
           </View>
         );
       })}
+    </View>
+  );
+};
+
+const KeyText: React.FC<{mainText: string; bracketText?: string}> = ({
+  mainText,
+  bracketText,
+}) => {
+  const [textWidth, setTextWidth] = useState(0);
+
+  return (
+    <View style={styles.keyContainer}>
+      <Text
+        style={styles.gridItemKeyText}
+        onLayout={event => {
+          const {width} = event.nativeEvent.layout;
+          setTextWidth(width);
+        }}>
+        {mainText}
+        {bracketText && (
+          <Text style={styles.gridItemBracketText}>({bracketText}</Text>
+        )}
+      </Text>
+      <View style={[styles.bottomLine, {width: textWidth}]} />
     </View>
   );
 };
@@ -210,17 +244,43 @@ const styles = StyleSheet.create({
     padding: vw(3),
   },
   gridItem: {
-    backgroundColor: 'white',
     width: '30%',
     marginVertical: vh(1),
-    padding: vw(2),
-    borderRadius: vw(2),
+  },
+  bottomLine: {
+    height: 1,
+    backgroundColor: '#D5CFF9',
+    position: 'absolute',
+    bottom: 0,
+  },
+  keyContainer: {
+    backgroundColor: 'white',
+    alignItems: 'center',
+    alignSelf: 'center',
+    flexShrink: 1,
+    padding: vw(1.5),
+    borderTopRightRadius: vw(2),
+    borderTopLeftRadius: vw(2),
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: {width: 0, height: -2}, // Shadow offset (no bottom shadow)
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+  },
+  valueContainer: {
+    backgroundColor: 'white',
+    borderTopRightRadius: vw(2),
+    borderBottomRightRadius: vw(2),
+    borderBottomLeftRadius: vw(2),
+    paddingHorizontal: vw(2),
+    paddingVertical: vw(3),
     alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2}, // Shadow offset (no top shadow)
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   gridItemKeyText: {
     fontSize: 10,
