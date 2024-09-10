@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
-import {containerStyle, vw} from '../../services/styleSheet';
+import {containerStyle, TAB_BAR_HEIGHT, vw} from '../../services/styleSheet';
 import useStatusBar from '../../services/useStatusBarCustom';
 import HeaderComponent from '../../components/HeaderComponent';
 import {Picker} from '@react-native-picker/picker';
@@ -45,21 +45,24 @@ const Rank = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <HeaderComponent
-          title={headerData.title}
-          subtitle={headerData.subTitle}
-          isBack={false}
-        />
-        <DateSelectionView
-          selectedDate={selectedDate}
-          setSelectedDate={setSelectedDate}
-          dateData={dateData}
-          randomData={randomData}
-        />
-        {renderAQIContainer('Harmful', filterDataByAQI(151, 200))}
-        {renderAQIContainer('Not good', filterDataByAQI(101, 150))}
-        {renderAQIContainer('Medium', filterDataByAQI(51, 100))}
-        {renderAQIContainer('Good', filterDataByAQI(0, 50))}
+        <View>
+          <HeaderComponent
+            title={headerData.title}
+            subtitle={headerData.subTitle}
+            isBack={false}
+          />
+          <DateSelectionView
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
+            dateData={dateData}
+            randomData={randomData}
+          />
+          {renderAQIContainer('Harmful', filterDataByAQI(151, 200))}
+          {renderAQIContainer('Not good', filterDataByAQI(101, 150))}
+          {renderAQIContainer('Medium', filterDataByAQI(51, 100))}
+          {renderAQIContainer('Good', filterDataByAQI(0, 50))}
+        </View>
+        <View style={{height: TAB_BAR_HEIGHT}} />
       </ScrollView>
     </SafeAreaView>
   );
