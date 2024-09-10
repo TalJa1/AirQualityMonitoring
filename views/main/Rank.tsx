@@ -2,7 +2,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {containerStyle, TAB_BAR_HEIGHT, vw} from '../../services/styleSheet';
+import {
+  containerStyle,
+  TAB_BAR_HEIGHT,
+  vh,
+  vw,
+} from '../../services/styleSheet';
 import useStatusBar from '../../services/useStatusBarCustom';
 import HeaderComponent from '../../components/HeaderComponent';
 import {Picker} from '@react-native-picker/picker';
@@ -33,10 +38,34 @@ const Rank = () => {
 
   const renderAQIContainer = (data: {label: string; value: string}[]) => {
     const groups = [
-      {title: 'Harmful', min: 151, max: 200},
-      {title: 'Not good', min: 101, max: 150},
-      {title: 'Medium', min: 51, max: 100},
-      {title: 'Good', min: 0, max: 50},
+      {
+        title: 'Harmful',
+        min: 151,
+        max: 200,
+        color: '#AC3939',
+        backColor: '#FFE5E599',
+      },
+      {
+        title: 'Not good',
+        min: 101,
+        max: 150,
+        color: '#C77A20',
+        backColor: '#FFF1E099',
+      },
+      {
+        title: 'Medium',
+        min: 51,
+        max: 100,
+        color: '#E0D818',
+        backColor: '#FFFEE899',
+      },
+      {
+        title: 'Good',
+        min: 0,
+        max: 50,
+        color: '#1BA564',
+        backColor: '#DEFCEE99',
+      },
     ];
 
     let currentIndex = 1;
@@ -46,12 +75,29 @@ const Rank = () => {
         {groups.map(group => {
           const filteredData = filterDataByAQI(group.min, group.max);
           return (
-            <View key={group.title} style={styles.aqiContainer}>
+            <View
+              key={group.title}
+              style={[
+                styles.aqiContainer,
+                {
+                  borderWidth: 1,
+                  borderColor: group.color,
+                  backgroundColor: group.backColor,
+                },
+              ]}>
               <View
                 style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Text style={styles.aqiTitle}>{group.title}</Text>
-                <Text style={styles.aqiTitle}>AQI</Text>
+                <Text style={[styles.aqiTitle, {color: group.color}]}>
+                  {group.title}
+                </Text>
+                <Text
+                  style={{fontSize: 16, fontWeight: '700', color: group.color}}>
+                  AQI
+                </Text>
               </View>
+              <View
+                style={{width: '80%', height: 1, backgroundColor: '#FCFCFC'}}
+              />
               {filteredData.map((item, index) => {
                 const [district, aqiIndex] = item.value.split('-');
                 return (
@@ -65,7 +111,7 @@ const Rank = () => {
                     <Text
                       style={{
                         fontSize: 14,
-                        color: '#4C4C4C',
+                        color: '#6E778B',
                         fontWeight: '500',
                       }}>
                       • {currentIndex++} {district}
@@ -103,7 +149,9 @@ const Rank = () => {
             dateData={dateData}
             randomData={randomData}
           />
-          {renderAQIContainer(randomData)}
+          <View style={{marginHorizontal: vw(5)}}>
+            {renderAQIContainer(randomData)}
+          </View>
         </View>
         <View style={{height: TAB_BAR_HEIGHT}} />
       </ScrollView>
@@ -148,25 +196,15 @@ export default Rank;
 const styles = StyleSheet.create({
   container: containerStyle,
   aqiContainer: {
-    marginVertical: vw(5),
+    marginVertical: vw(2),
     paddingHorizontal: vw(5),
+    paddingVertical: vh(1),
+    borderRadius: 10,
   },
   aqiTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 14,
+    fontWeight: '700',
     color: '#272727',
     marginBottom: vw(2),
-  },
-  harmful: {
-    // Add specific styles for harmful group if needed
-  },
-  notGood: {
-    // Add specific styles for not good group if needed
-  },
-  medium: {
-    // Add specific styles for medium group if needed
-  },
-  good: {
-    // Add specific styles for good group if needed
   },
 });
