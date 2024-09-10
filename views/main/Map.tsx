@@ -6,6 +6,11 @@ import {containerStyle} from '../../services/styleSheet';
 import useStatusBar from '../../services/useStatusBarCustom';
 import HeaderComponent from '../../components/HeaderComponent';
 import GradientBackground from '../../components/GradientBackground';
+import Mapbox from '@rnmapbox/maps';
+
+Mapbox.setAccessToken(
+  'pk.eyJ1IjoidGFsamExIiwiYSI6ImNtMHc3bnNkczAxOGEya3IxaTltZHF4Z3oifQ.JQc_12qN-6j_p2LnqV6n-A',
+);
 
 const Map = () => {
   useStatusBar('white');
@@ -19,6 +24,11 @@ const Map = () => {
           <View>
             <Text>Map</Text>
           </View>
+          <View style={styles.page}>
+            <View style={styles.mapcontainer}>
+              <Mapbox.MapView style={styles.map} />
+            </View>
+          </View>
         </ScrollView>
       </SafeAreaView>
     </GradientBackground>
@@ -29,4 +39,16 @@ export default Map;
 
 const styles = StyleSheet.create({
   container: {flex: 1},
+  page: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  mapcontainer: {
+    height: 300,
+    width: 300,
+  },
+  map: {
+    flex: 1,
+  },
 });
