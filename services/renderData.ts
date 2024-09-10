@@ -179,3 +179,74 @@ export const AQIDetailData = [
     'O3(pmm)': 22.0,
   },
 ];
+
+export const getRandomData = () => {
+  const daysOfWeek = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
+  const districts = [
+    'Ba Dinh',
+    'Hoan Kiem',
+    'Tay Ho',
+    'Long Bien',
+    'Cau Giay',
+    'Dong Da',
+    'Hai Ba Trung',
+    'Hoang Mai',
+    'Thanh Xuan',
+    'Soc Son',
+    'Dong Anh',
+    'Gia Lam',
+    'Nam Tu Liem',
+    'Thanh Tri',
+    'Bac Tu Liem',
+    'Me Linh',
+    'Ha Dong',
+    'Son Tay',
+    'Ba Vi',
+    'Phuc Tho',
+    'Dan Phuong',
+    'Hoai Duc',
+    'Quoc Oai',
+    'Thach That',
+    'Chuong My',
+    'Thanh Oai',
+    'Thuong Tin',
+    'Phu Xuyen',
+    'Ung Hoa',
+    'My Duc',
+  ];
+
+  const today = new Date();
+  const dateData = Array.from({length: 7}, (_, i) => {
+    const date = new Date(today);
+    date.setDate(today.getDate() + i);
+    const dayOfWeek = daysOfWeek[date.getDay()];
+    const day = date.getDate();
+    const month = date.toLocaleString('default', {month: 'long'});
+    return {
+      label:
+        i === 0
+          ? `Today, ${day}th ${month}`
+          : `${dayOfWeek}, ${day}th ${month}`,
+      value: `day${i}`,
+    };
+  });
+
+  const randomData = Array.from({length: 11}, () => {
+    const district = districts[Math.floor(Math.random() * districts.length)];
+    const aqiIndex = Math.floor(Math.random() * 201);
+    return {
+      label: `${district} - AQI: ${aqiIndex}`,
+      value: `${district}-${aqiIndex}`,
+    };
+  });
+
+  return {dateData, randomData};
+};
