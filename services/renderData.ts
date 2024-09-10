@@ -202,25 +202,6 @@ export const getRandomData = () => {
     'Thanh Xuan',
     'Soc Son',
     'Dong Anh',
-    'Gia Lam',
-    'Nam Tu Liem',
-    'Thanh Tri',
-    'Bac Tu Liem',
-    'Me Linh',
-    'Ha Dong',
-    'Son Tay',
-    'Ba Vi',
-    'Phuc Tho',
-    'Dan Phuong',
-    'Hoai Duc',
-    'Quoc Oai',
-    'Thach That',
-    'Chuong My',
-    'Thanh Oai',
-    'Thuong Tin',
-    'Phu Xuyen',
-    'Ung Hoa',
-    'My Duc',
   ];
 
   const today = new Date();
@@ -239,8 +220,7 @@ export const getRandomData = () => {
     };
   });
 
-  const randomData = Array.from({length: 11}, () => {
-    const district = districts[Math.floor(Math.random() * districts.length)];
+  const randomData = districts.map(district => {
     const aqiIndex = Math.floor(Math.random() * 201);
     return {
       label: `${district} - AQI: ${aqiIndex}`,
