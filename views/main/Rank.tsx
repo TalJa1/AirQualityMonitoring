@@ -13,6 +13,7 @@ import HeaderComponent from '../../components/HeaderComponent';
 import {Picker} from '@react-native-picker/picker';
 import {inforCircleIcon} from '../../assets/svgXml';
 import {getRandomData} from '../../services/renderData';
+import GradientBackground from '../../components/GradientBackground';
 
 const Rank = () => {
   useStatusBar('white');
@@ -135,27 +136,29 @@ const Rank = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <View>
-          <HeaderComponent
-            title={headerData.title}
-            subtitle={headerData.subTitle}
-            isBack={false}
-          />
-          <DateSelectionView
-            selectedDate={selectedDate}
-            setSelectedDate={setSelectedDate}
-            dateData={dateData}
-            randomData={randomData}
-          />
-          <View style={{marginHorizontal: vw(5)}}>
-            {renderAQIContainer(randomData)}
+    <GradientBackground colors={['white', '#E5FAFD']}>
+      <SafeAreaView style={styles.container}>
+        <ScrollView>
+          <View>
+            <HeaderComponent
+              title={headerData.title}
+              subtitle={headerData.subTitle}
+              isBack={false}
+            />
+            <DateSelectionView
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+              dateData={dateData}
+              randomData={randomData}
+            />
+            <View style={{marginHorizontal: vw(5)}}>
+              {renderAQIContainer(randomData)}
+            </View>
           </View>
-        </View>
-        <View style={{height: TAB_BAR_HEIGHT}} />
-      </ScrollView>
-    </SafeAreaView>
+          <View style={{height: TAB_BAR_HEIGHT}} />
+        </ScrollView>
+      </SafeAreaView>
+    </GradientBackground>
   );
 };
 
