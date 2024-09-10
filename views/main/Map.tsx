@@ -2,7 +2,7 @@
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {containerStyle} from '../../services/styleSheet';
+import {containerStyle, vh, vw} from '../../services/styleSheet';
 import useStatusBar from '../../services/useStatusBarCustom';
 import HeaderComponent from '../../components/HeaderComponent';
 import GradientBackground from '../../components/GradientBackground';
@@ -45,8 +45,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   mapcontainer: {
-    height: 300,
-    width: 300,
+    height: vh(80),
+    width: vw(90),
+    borderRadius: 20,
+    overflow: 'hidden',
   },
   map: {
     flex: 1,
