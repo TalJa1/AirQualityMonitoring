@@ -220,13 +220,27 @@ export const getRandomData = () => {
     };
   });
 
-  const randomData = districts.map(district => {
-    const aqiIndex = Math.floor(Math.random() * 201);
+  const assignAQI = (district: string, min: number, max: number) => {
+    const aqiIndex = Math.floor(Math.random() * (max - min + 1)) + min;
     return {
       label: `${district} - AQI: ${aqiIndex}`,
       value: `${district}-${aqiIndex}`,
     };
-  });
+  };
+
+  const randomData = [
+    assignAQI(districts[0], 151, 200),
+    assignAQI(districts[1], 101, 150),
+    assignAQI(districts[2], 51, 100),
+    assignAQI(districts[3], 0, 50),
+    ...districts.slice(4).map(district => {
+      const aqiIndex = Math.floor(Math.random() * 201);
+      return {
+        label: `${district} - AQI: ${aqiIndex}`,
+        value: `${district}-${aqiIndex}`,
+      };
+    }),
+  ];
 
   return {dateData, randomData};
 };

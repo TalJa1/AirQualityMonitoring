@@ -19,6 +19,29 @@ const Rank = () => {
 
   const {dateData, randomData} = getRandomData();
 
+  const filterDataByAQI = (min: number, max: number) => {
+    return randomData.filter(item => {
+      const aqi = parseInt(item.label.split('AQI: ')[1], 10);
+      return aqi >= min && aqi <= max;
+    });
+  };
+
+  const renderAQIContainer = (
+    title: string,
+    data: {label: string; value: string}[],
+  ) => (
+    <View style={styles.aqiContainer}>
+      <Text style={styles.aqiTitle}>{title}</Text>
+      {data.map((item, index) => (
+        <Text
+          key={index}
+          style={{fontSize: 16, color: '#272727', marginVertical: vw(1)}}>
+          {item.label}
+        </Text>
+      ))}
+    </View>
+  );
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -33,6 +56,10 @@ const Rank = () => {
           dateData={dateData}
           randomData={randomData}
         />
+        {renderAQIContainer('Harmful', filterDataByAQI(151, 200))}
+        {renderAQIContainer('Not good', filterDataByAQI(101, 150))}
+        {renderAQIContainer('Medium', filterDataByAQI(51, 100))}
+        {renderAQIContainer('Good', filterDataByAQI(0, 50))}
       </ScrollView>
     </SafeAreaView>
   );
@@ -56,7 +83,7 @@ const DateSelectionView: React.FC<{
           dropdownIconColor={'#6E778B'}
           selectedValue={selectedDate}
           style={{
-            width: vw(34),
+            width: vw(50),
             color: '#272727',
           }}
           onValueChange={itemValue => setSelectedDate(itemValue)}>
@@ -66,15 +93,6 @@ const DateSelectionView: React.FC<{
         </Picker>
         {inforCircleIcon(vw(6), vw(6))}
       </View>
-      <View style={{marginTop: vw(5)}}>
-        {randomData.map((item, index) => (
-          <Text
-            key={index}
-            style={{fontSize: 16, color: '#272727', marginVertical: vw(1)}}>
-            {item.label}
-          </Text>
-        ))}
-      </View>
     </View>
   );
 };
@@ -83,4 +101,14 @@ export default Rank;
 
 const styles = StyleSheet.create({
   container: containerStyle,
+  aqiContainer: {
+    marginVertical: vw(5),
+    paddingHorizontal: vw(5),
+  },
+  aqiTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#272727',
+    marginBottom: vw(2),
+  },
 });
