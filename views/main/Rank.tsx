@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {containerStyle, TAB_BAR_HEIGHT, vw} from '../../services/styleSheet';
 import useStatusBar from '../../services/useStatusBarCustom';
 import HeaderComponent from '../../components/HeaderComponent';
@@ -16,31 +16,77 @@ const Rank = () => {
     subTitle: 'Hoan Kiem, Hanoi',
   });
   const [selectedDate, setSelectedDate] = useState('current');
-
   const {dateData, randomData} = getRandomData();
 
   const filterDataByAQI = (min: number, max: number) => {
-    return randomData.filter(item => {
-      const aqi = parseInt(item.label.split('AQI: ')[1], 10);
-      return aqi >= min && aqi <= max;
-    });
+    return randomData
+      .filter(item => {
+        const aqi = parseFloat(item.value.split('-')[1]);
+        return aqi >= min && aqi <= max;
+      })
+      .sort((a, b) => {
+        const aqiA = parseFloat(a.value.split('-')[1]);
+        const aqiB = parseFloat(b.value.split('-')[1]);
+        return aqiB - aqiA; // Sort in descending order
+      });
   };
 
-  const renderAQIContainer = (
-    title: string,
-    data: {label: string; value: string}[],
-  ) => (
-    <View style={styles.aqiContainer}>
-      <Text style={styles.aqiTitle}>{title}</Text>
-      {data.map((item, index) => (
-        <Text
-          key={index}
-          style={{fontSize: 16, color: '#272727', marginVertical: vw(1)}}>
-          {item.label}
-        </Text>
-      ))}
-    </View>
-  );
+  const renderAQIContainer = (data: {label: string; value: string}[]) => {
+    const groups = [
+      {title: 'Harmful', min: 151, max: 200},
+      {title: 'Not good', min: 101, max: 150},
+      {title: 'Medium', min: 51, max: 100},
+      {title: 'Good', min: 0, max: 50},
+    ];
+
+    let currentIndex = 1;
+
+    return (
+      <View>
+        {groups.map(group => {
+          const filteredData = filterDataByAQI(group.min, group.max);
+          return (
+            <View key={group.title} style={styles.aqiContainer}>
+              <View
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Text style={styles.aqiTitle}>{group.title}</Text>
+                <Text style={styles.aqiTitle}>AQI</Text>
+              </View>
+              {filteredData.map((item, index) => {
+                const [district, aqiIndex] = item.value.split('-');
+                return (
+                  <View
+                    key={index}
+                    style={{
+                      flexDirection: 'row',
+                      marginVertical: vw(1),
+                      justifyContent: 'space-between',
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        color: '#4C4C4C',
+                        fontWeight: '500',
+                      }}>
+                      • {currentIndex++} {district}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        color: '#4C4C4C',
+                        fontWeight: '700',
+                      }}>
+                      {aqiIndex}
+                    </Text>
+                  </View>
+                );
+              })}
+            </View>
+          );
+        })}
+      </View>
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -57,10 +103,7 @@ const Rank = () => {
             dateData={dateData}
             randomData={randomData}
           />
-          {renderAQIContainer('Harmful', filterDataByAQI(151, 200))}
-          {renderAQIContainer('Not good', filterDataByAQI(101, 150))}
-          {renderAQIContainer('Medium', filterDataByAQI(51, 100))}
-          {renderAQIContainer('Good', filterDataByAQI(0, 50))}
+          {renderAQIContainer(randomData)}
         </View>
         <View style={{height: TAB_BAR_HEIGHT}} />
       </ScrollView>
@@ -113,5 +156,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#272727',
     marginBottom: vw(2),
+  },
+  harmful: {
+    // Add specific styles for harmful group if needed
+  },
+  notGood: {
+    // Add specific styles for not good group if needed
+  },
+  medium: {
+    // Add specific styles for medium group if needed
+  },
+  good: {
+    // Add specific styles for good group if needed
   },
 });
