@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {centerAll, containerStyle, vh, vw} from '../../services/styleSheet';
 import useStatusBar from '../../services/useStatusBarCustom';
@@ -15,9 +15,20 @@ import {LoginBtnProps} from '../../services/typeProps';
 import {appleIcon, googleIcon} from '../../assets/svgXml';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {loadData} from '../../services/storage';
 
 const Login = () => {
   useStatusBar('white');
+  const [isFinishOnboarding, setIsFinishOnboarding] = useState(false);
+  useEffect(() => {
+    loadData<boolean>('onboardingFinish')
+      .then(data => {
+        setIsFinishOnboarding(data);
+      })
+      .catch(() => {
+        setIsFinishOnboarding(false);
+      });
+  }, []);
   return (
     <SafeAreaView style={[styles.container, {backgroundColor: 'white'}]}>
       <ScrollView
@@ -36,7 +47,12 @@ const Login = () => {
             justifyContent: 'flex-end',
           }}>
           <View style={{rowGap: vh(1), marginBottom: vh(5)}}>
-            <BtnLayout title="Sign In" btnColor="#3E3792" textColor="white" />
+            <BtnLayout
+              title="Sign In"
+              btnColor="#3E3792"
+              textColor="white"
+              isFinishOnboarding={isFinishOnboarding}
+            />
             <View
               style={{
                 flexDirection: 'row',
@@ -64,12 +80,14 @@ const Login = () => {
               <View style={{flex: 1, height: 1, backgroundColor: '#4C4C4C'}} />
             </View>
             <BtnLayout
+              isFinishOnboarding={isFinishOnboarding}
               title="Continue with Google"
               btnColor="white"
               textColor="#0000008A"
               icon={googleIcon(vw(6), vw(6))}
             />
             <BtnLayout
+              isFinishOnboarding={isFinishOnboarding}
               title="Continue with Apple"
               btnColor="black"
               textColor="white"
@@ -82,16 +100,24 @@ const Login = () => {
   );
 };
 
-const BtnLayout: React.FC<LoginBtnProps> = ({
+const BtnLayout: React.FC<LoginBtnProps & {isFinishOnboarding: boolean}> = ({
   btnColor,
   textColor,
   title,
   icon,
+  isFinishOnboarding,
 }) => {
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('Onboarding')}
+      disabled={title !== 'Sign In'}
+      onPress={() => {
+        if (isFinishOnboarding) {
+          navigation.navigate('Main');
+        } else {
+          navigation.navigate('Onboarding');
+        }
+      }}
       id={title}
       style={[
         {

@@ -15,6 +15,7 @@ import * as Progress from 'react-native-progress';
 import {arrowBackIcon, arrowNextIcon} from '../../assets/svgXml';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { saveData } from '../../services/storage';
 
 const OnboardingComponent: React.FC<OnboardingComponentProps> = ({
   title,
@@ -72,6 +73,7 @@ const StepLoader: React.FC<{
           disabled={isNext === false ? true : false}
           onPress={() => {
             if (step === 1) {
+              saveData('onboardingFinish', 'true');
               navigation.navigate('Main');
             } else {
               setStep(parseFloat((step + 0.2).toFixed(1)));
