@@ -26,7 +26,8 @@ const Login = () => {
           marginVertical: vh(1),
           flex: 1,
         }}>
-        <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
+        <View
+          style={{alignItems: 'center', justifyContent: 'flex-end', flex: 1}}>
           <Image source={require('../../assets/login/login.png')} />
         </View>
         <View
