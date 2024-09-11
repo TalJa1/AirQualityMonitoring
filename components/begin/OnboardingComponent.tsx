@@ -13,6 +13,8 @@ import {containerStyle, vh, vw} from '../../services/styleSheet';
 import {OnboardingComponentProps} from '../../services/typeProps';
 import * as Progress from 'react-native-progress';
 import {arrowBackIcon, arrowNextIcon} from '../../assets/svgXml';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 const OnboardingComponent: React.FC<OnboardingComponentProps> = ({
   title,
@@ -44,6 +46,7 @@ const StepLoader: React.FC<{
   setStep: (newStep: number) => void;
   isNext: boolean;
 }> = ({step, setStep, isNext}) => {
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
   return (
     <View>
       <Progress.Bar
@@ -68,7 +71,11 @@ const StepLoader: React.FC<{
         <TouchableOpacity
           disabled={isNext === false ? true : false}
           onPress={() => {
-            setStep(parseFloat((step + 0.2).toFixed(1)));
+            if (step === 1) {
+              navigation.navigate('Main');
+            } else {
+              setStep(parseFloat((step + 0.2).toFixed(1)));
+            }
           }}
           style={[
             styles.circleButton,
