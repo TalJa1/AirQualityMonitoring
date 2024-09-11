@@ -83,7 +83,7 @@ const App = () => {
   return (
     <NavigationContainer>
       {/* Main || Login */}
-      <Stack.Navigator initialRouteName="Main">
+      <Stack.Navigator initialRouteName="Login">
         {/* Main layout with 3 bottom tabs */}
         <Stack.Screen
           name="Main"
