@@ -99,7 +99,7 @@ const Map = () => {
                       zoomLevel={14}
                       centerCoordinate={[location.longitude, location.latitude]}
                       animationMode={'flyTo'}
-                      animationDuration={1000}
+                      animationDuration={500}
                     />
                   )}
                   {location && (
