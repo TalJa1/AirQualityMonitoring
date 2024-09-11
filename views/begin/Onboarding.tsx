@@ -14,7 +14,7 @@ import OnboardingComponent from '../../components/begin/OnboardingComponent';
 import {centerAll, containerStyle, vh, vw} from '../../services/styleSheet';
 import {locationIcon} from '../../assets/svgXml';
 import {OnboardingInterfaceProps} from '../../services/typeProps';
-import { saveData } from '../../services/storage';
+import {saveData} from '../../services/storage';
 
 const Onboarding = () => {
   const [isBoarding, setIsBoarding] = useState(false);
@@ -29,7 +29,7 @@ const Onboarding = () => {
 
   useEffect(() => {
     saveData('userInforStorage', formData);
-  },[formData]);
+  }, [formData]);
 
   const getStepComponent = (): React.ReactNode => {
     switch (step) {
@@ -188,7 +188,7 @@ const WelcomeView: React.FC<OnboardingInterfaceProps> = ({
     'Ngo Quyen, Hai Phong',
     'Vu Ban, Nam Dinh',
     'Que Vo, Bac Ninh',
-    'TP Ho Chi Minh',
+    'District 1, TP HCM',
   ]);
 
   const handleLocationPress = (index: number) => {
