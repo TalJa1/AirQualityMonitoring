@@ -2,11 +2,16 @@
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {containerStyle, vh, vw} from '../../services/styleSheet';
+import {
+  containerStyle,
+  TAB_BAR_HEIGHT,
+  vh,
+  vw,
+} from '../../services/styleSheet';
 import useStatusBar from '../../services/useStatusBarCustom';
 import HeaderComponent from '../../components/HeaderComponent';
 import GradientBackground from '../../components/GradientBackground';
-import Mapbox from '@rnmapbox/maps';
+import Mapbox, {PointAnnotation} from '@rnmapbox/maps';
 
 Mapbox.setAccessToken(
   'pk.eyJ1IjoidGFsamExIiwiYSI6ImNtMHc3bnNkczAxOGEya3IxaTltZHF4Z3oifQ.JQc_12qN-6j_p2LnqV6n-A',
@@ -20,10 +25,7 @@ const Map = () => {
     <GradientBackground colors={['white', '#E5FAFD']}>
       <SafeAreaView style={styles.container}>
         <ScrollView>
-          <HeaderComponent title={headerTitle} isBack={false} />
-          <View>
-            <Text>Map</Text>
-          </View>
+          <HeaderComponent title={headerTitle} isBack={false} subtitle=" " />
           <View style={styles.page}>
             <View style={styles.mapcontainer}>
               <Mapbox.MapView style={styles.map} />
@@ -47,7 +49,7 @@ const styles = StyleSheet.create({
   mapcontainer: {
     height: vh(80),
     width: vw(90),
-    borderRadius: 20,
+    borderRadius: 12,
     overflow: 'hidden',
   },
   map: {
