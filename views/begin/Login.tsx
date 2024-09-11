@@ -19,7 +19,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 const Login = () => {
   useStatusBar('white');
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, {backgroundColor: 'white'}]}>
       <ScrollView
         style={{paddingHorizontal: vw(5)}}
         contentContainerStyle={{
@@ -101,6 +101,7 @@ const BtnLayout: React.FC<LoginBtnProps> = ({
           columnGap: vw(2),
         },
         centerAll,
+        styles.shadow,
       ]}>
       {icon}
       <Text style={{fontSize: 20, fontWeight: 500, color: textColor}}>
@@ -114,4 +115,11 @@ export default Login;
 
 const styles = StyleSheet.create({
   container: containerStyle,
+  shadow: {
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5, // For Android shadow
+  },
 });
