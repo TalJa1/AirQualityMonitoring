@@ -1,13 +1,15 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
+  PermissionsAndroid,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {
   centerAll,
@@ -19,8 +21,9 @@ import {
 import useStatusBar from '../../services/useStatusBarCustom';
 import HeaderComponent from '../../components/HeaderComponent';
 import GradientBackground from '../../components/GradientBackground';
-import Mapbox, {PointAnnotation} from '@rnmapbox/maps';
-import {TabBarProps} from '../../services/typeProps';
+import Mapbox, {Camera, PointAnnotation} from '@rnmapbox/maps';
+import {Location, TabBarProps} from '../../services/typeProps';
+import Geolocation from 'react-native-geolocation-service';
 
 Mapbox.setAccessToken(
   'pk.eyJ1IjoidGFsamExIiwiYSI6ImNtMHc3bnNkczAxOGEya3IxaTltZHF4Z3oifQ.JQc_12qN-6j_p2LnqV6n-A',
@@ -30,7 +33,43 @@ const Map = () => {
   useStatusBar('white');
   const [headerTitle, setHeaderTitle] = useState('Hanoi, Vietnam');
   const [tabIndex, setTabIndex] = useState(0);
+  const [location, setLocation] = useState<Location | null>(null);
   const tabs = ['All', 'Good', 'Medium', 'Not Good', 'Harmful'];
+
+  useEffect(() => {
+    const requestLocationPermission = async () => {
+      if (Platform.OS === 'android') {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            title: 'Location Permission',
+            message: 'This app needs access to your location',
+            buttonNeutral: 'Ask Me Later',
+            buttonNegative: 'Cancel',
+            buttonPositive: 'OK',
+          },
+        );
+        if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+          console.log('Location permission denied');
+          return;
+        }
+      }
+      Geolocation.getCurrentPosition(
+        position => {
+          setLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        error => {
+          console.log(error.code, error.message);
+        },
+        {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+      );
+    };
+
+    requestLocationPermission();
+  }, []);
 
   return (
     <GradientBackground colors={['white', '#E5FAFD']}>
@@ -55,7 +94,24 @@ const Map = () => {
             </View>
             <View style={styles.page}>
               <View style={styles.mapcontainer}>
-                <Mapbox.MapView style={styles.map} />
+                <Mapbox.MapView style={styles.map}>
+                  {location && (
+                    <Camera
+                      zoomLevel={14}
+                      centerCoordinate={[location.longitude, location.latitude]}
+                      animationMode={'flyTo'}
+                      animationDuration={2000}
+                    />
+                  )}
+                  {location && (
+                    <PointAnnotation
+                      id="currentLocation"
+                      coordinate={[location.longitude, location.latitude]}
+                    >
+                      <View style={{height: 30, width: 30, backgroundColor: 'red', borderRadius: 15}} />
+                    </PointAnnotation>
+                  )}
+                </Mapbox.MapView>
               </View>
             </View>
           </View>
@@ -73,6 +129,7 @@ const TabsView: React.FC<TabBarProps> = ({setTabIndex, tabIndex, tabs}) => {
       contentContainerStyle={{columnGap: vw(2)}}>
       {tabs.map((tab, index) => (
         <TouchableOpacity
+          key={index}
           onPress={() => setTabIndex(index)}
           style={[
             styles.tabContainer,

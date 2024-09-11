@@ -55,3 +55,8 @@ export interface TabBarProps {
   setTabIndex: (index: number) => void;
   tabIndex: number;
 }
+
+export type Location = {
+  latitude: number;
+  longitude: number;
+};
