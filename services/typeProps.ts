@@ -49,3 +49,9 @@ export interface GradientBackgroundProps {
   children: React.ReactNode;
   colors: string[];
 }
+
+export interface TabBarProps {
+  tabs: string[];
+  setTabIndex: (index: number) => void;
+  tabIndex: number;
+}
