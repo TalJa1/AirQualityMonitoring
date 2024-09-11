@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
+  Image,
   PermissionsAndroid,
   Platform,
   ScrollView,
@@ -24,6 +25,7 @@ import GradientBackground from '../../components/GradientBackground';
 import Mapbox, {Camera, PointAnnotation} from '@rnmapbox/maps';
 import {Location, TabBarProps} from '../../services/typeProps';
 import Geolocation from 'react-native-geolocation-service';
+import { Mapimages } from '../../services/renderData';
 
 Mapbox.setAccessToken(
   'pk.eyJ1IjoidGFsamExIiwiYSI6ImNtMHc3bnNkczAxOGEya3IxaTltZHF4Z3oifQ.JQc_12qN-6j_p2LnqV6n-A',
@@ -34,6 +36,7 @@ const Map = () => {
   const [headerTitle, setHeaderTitle] = useState('Hanoi, Vietnam');
   const [tabIndex, setTabIndex] = useState(0);
   const [location, setLocation] = useState<Location | null>(null);
+  const [randomLocations, setRandomLocations] = useState<Location[]>([]);
   const tabs = ['All', 'Good', 'Medium', 'Not Good', 'Harmful'];
 
   useEffect(() => {
@@ -56,10 +59,12 @@ const Map = () => {
       }
       Geolocation.getCurrentPosition(
         position => {
-          setLocation({
+          const currentLocation = {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
-          });
+          };
+          setLocation(currentLocation);
+          setRandomLocations(generateRandomLocations(currentLocation, 4, 1000));
         },
         error => {
           console.log(error.code, error.message);
@@ -69,7 +74,41 @@ const Map = () => {
     };
 
     requestLocationPermission();
+    // Function to generate random locations
+    const generateRandomLocations = (
+      baseLocation: Location,
+      count: number,
+      radius: number,
+    ): Location[] => {
+      const locations: Location[] = [];
+      for (let i = 0; i < count; i++) {
+        const randomLocation = getRandomLocation(baseLocation, radius);
+        locations.push(randomLocation);
+      }
+      return locations;
+    };
   }, []);
+
+  const getRandomLocation = (
+    baseLocation: Location,
+    radius: number,
+  ): Location => {
+    const y0 = baseLocation.latitude;
+    const x0 = baseLocation.longitude;
+    const rd = radius / 111300; // Convert radius from meters to degrees
+
+    const u = Math.random();
+    const v = Math.random();
+    const w = rd * Math.sqrt(u);
+    const t = 2 * Math.PI * v;
+    const x = w * Math.cos(t);
+    const y = w * Math.sin(t);
+
+    const newLat = y + y0;
+    const newLon = x + x0;
+
+    return {latitude: newLat, longitude: newLon};
+  };
 
   return (
     <GradientBackground colors={['white', '#E5FAFD']}>
@@ -116,6 +155,17 @@ const Map = () => {
                       />
                     </PointAnnotation>
                   )}
+                  {randomLocations.map((loc, index) => (
+                    <PointAnnotation
+                      key={index.toString()}
+                      id={`randomLocation${index}`}
+                      coordinate={[loc.longitude, loc.latitude]}>
+                      <Image
+                        source={Mapimages[index]}
+                        style={{height: vw(15), width: vw(15)}}
+                      />
+                    </PointAnnotation>
+                  ))}
                 </Mapbox.MapView>
               </View>
             </View>
