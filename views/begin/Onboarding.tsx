@@ -1,6 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 import {
+  Image,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -53,29 +55,36 @@ const Onboarding = () => {
   return (
     <>
       {isBoarding === false ? (
-        <SafeAreaView
-          style={[
-            styles.container,
-            {
-              paddingHorizontal: vw(5),
-              justifyContent: 'flex-end',
-              paddingBottom: vh(5),
-            },
-          ]}>
-          <TouchableOpacity
-            style={[
-              {
-                backgroundColor: '#3E3792',
-                borderRadius: 44,
-                paddingVertical: vh(1.5),
-              },
-              centerAll,
-            ]}
-            onPress={() => setIsBoarding(true)}>
-            <Text style={{color: '#FCFCFC', fontSize: 20, fontWeight: '700'}}>
-              Get started
-            </Text>
-          </TouchableOpacity>
+        <SafeAreaView style={[styles.container, {backgroundColor: 'white'}]}>
+          <ScrollView contentContainerStyle={{flex: 1}}>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingHorizontal: vw(5),
+              }}>
+              <Image source={require('../../assets/login/login.png')} />
+              <TouchableOpacity
+                style={[
+                  {
+                    position: 'absolute',
+                    bottom: vh(5),
+                    backgroundColor: '#3E3792',
+                    width: vw(90),
+                    borderRadius: 44,
+                    paddingVertical: vh(1.5),
+                  },
+                  centerAll,
+                ]}
+                onPress={() => setIsBoarding(true)}>
+                <Text
+                  style={{color: '#FCFCFC', fontSize: 20, fontWeight: '700'}}>
+                  Get started
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
         </SafeAreaView>
       ) : (
         <OnboardingComponent
