@@ -81,8 +81,7 @@ const Map = () => {
               style={{
                 zIndex: 2,
                 position: 'absolute',
-                backgroundColor: '#697B7C66',
-                padding: vw(3),
+                backgroundColor: '#BBC1C3',
                 borderRadius: 10,
                 top: vh(1),
               }}>
@@ -131,8 +130,8 @@ const TabsView: React.FC<TabBarProps> = ({setTabIndex, tabIndex, tabs}) => {
   return (
     <ScrollView
       horizontal
-      style={{width: vw(80)}}
-      contentContainerStyle={{columnGap: vw(2)}}>
+      style={{width: vw(85)}}
+      contentContainerStyle={{columnGap: vw(2), padding: vw(2)}}>
       {tabs.map((tab, index) => (
         <TouchableOpacity
           key={index}
