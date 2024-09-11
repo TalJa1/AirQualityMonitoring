@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {
   centerAll,
@@ -31,6 +31,7 @@ import {
 import Geolocation from 'react-native-geolocation-service';
 import {Mapimages} from '../../services/renderData';
 import {loadData, saveData} from '../../services/storage';
+import {useFocusEffect} from '@react-navigation/native';
 
 Mapbox.setAccessToken(
   'pk.eyJ1IjoidGFsamExIiwiYSI6ImNtMHc3bnNkczAxOGEya3IxaTltZHF4Z3oifQ.JQc_12qN-6j_p2LnqV6n-A',
@@ -62,55 +63,59 @@ const Map = () => {
       });
   }, []);
 
-  useEffect(() => {
-    const generateRandomLocations = (
-      baseLocation: Location,
-      count: number,
-      radius: number,
-    ): Location[] => {
-      const locations: Location[] = [];
-      for (let i = 0; i < count; i++) {
-        const randomLocation = getRandomLocation(baseLocation, radius);
-        locations.push(randomLocation);
-      }
-      return locations;
-    };
-
-    const requestLocationPermission = async () => {
-      if (Platform.OS === 'android') {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-          {
-            title: 'Location Permission',
-            message: 'This app needs access to your location',
-            buttonNeutral: 'Ask Me Later',
-            buttonNegative: 'Cancel',
-            buttonPositive: 'OK',
-          },
-        );
-        if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
-          console.log('Location permission denied');
-          return;
+  useFocusEffect(
+    useCallback(() => {
+      const generateRandomLocations = (
+        baseLocation: Location,
+        count: number,
+        radius: number,
+      ): Location[] => {
+        const locations: Location[] = [];
+        for (let i = 0; i < count; i++) {
+          const randomLocation = getRandomLocation(baseLocation, radius);
+          locations.push(randomLocation);
         }
-      }
-      Geolocation.getCurrentPosition(
-        position => {
-          const currentLocation = {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          };
-          setLocation(currentLocation);
-          setRandomLocations(generateRandomLocations(currentLocation, 8, 1000));
-        },
-        error => {
-          console.log(error.code, error.message);
-        },
-        {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
-      );
-    };
+        return locations;
+      };
 
-    requestLocationPermission();
-  }, []);
+      const requestLocationPermission = async () => {
+        if (Platform.OS === 'android') {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+              title: 'Location Permission',
+              message: 'This app needs access to your location',
+              buttonNeutral: 'Ask Me Later',
+              buttonNegative: 'Cancel',
+              buttonPositive: 'OK',
+            },
+          );
+          if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+            console.log('Location permission denied');
+            return;
+          }
+        }
+        Geolocation.getCurrentPosition(
+          position => {
+            const currentLocation = {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            };
+            setLocation(currentLocation);
+            setRandomLocations(
+              generateRandomLocations(currentLocation, 8, 1000),
+            );
+          },
+          error => {
+            console.log(error.code, error.message);
+          },
+          {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+        );
+      };
+
+      requestLocationPermission();
+    }, []),
+  );
 
   const getRandomLocation = (
     baseLocation: Location,
@@ -147,19 +152,14 @@ const Map = () => {
   const switchImg = (tabInd: number, mapIndex: number) => {
     switch (tabInd) {
       case 0:
-        console.log('render 0');
         return Mapimages[mapIndex % Mapimages.length];
       case 1:
-        console.log('render 1');
         return require('../../assets/map/good.png');
       case 2:
-        console.log('render 2');
         return require('../../assets/map/medium.png');
       case 3:
-        console.log('render 3');
         return require('../../assets/map/notgood.png');
       case 4:
-        console.log('render 4');
         return require('../../assets/map/harmful.png');
     }
   };
