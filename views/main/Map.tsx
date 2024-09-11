@@ -23,9 +23,14 @@ import useStatusBar from '../../services/useStatusBarCustom';
 import HeaderComponent from '../../components/HeaderComponent';
 import GradientBackground from '../../components/GradientBackground';
 import Mapbox, {Camera, PointAnnotation} from '@rnmapbox/maps';
-import {Location, TabBarProps} from '../../services/typeProps';
+import {
+  Location,
+  TabBarProps,
+  UserInforInterface,
+} from '../../services/typeProps';
 import Geolocation from 'react-native-geolocation-service';
 import {Mapimages} from '../../services/renderData';
+import {loadData, saveData} from '../../services/storage';
 
 Mapbox.setAccessToken(
   'pk.eyJ1IjoidGFsamExIiwiYSI6ImNtMHc3bnNkczAxOGEya3IxaTltZHF4Z3oifQ.JQc_12qN-6j_p2LnqV6n-A',
@@ -33,11 +38,29 @@ Mapbox.setAccessToken(
 
 const Map = () => {
   useStatusBar('white');
-  const [headerTitle, setHeaderTitle] = useState('Hanoi, Vietnam');
+  const [headerTitle, setHeaderTitle] = useState('');
   const [tabIndex, setTabIndex] = useState(0);
   const [location, setLocation] = useState<Location | null>(null);
   const [randomLocations, setRandomLocations] = useState<Location[]>([]);
   const tabs = ['All', 'Good', 'Medium', 'Not Good', 'Harmful'];
+
+  useEffect(() => {
+    loadData<UserInforInterface>('userInforStorage')
+      .then(loadedData => {
+        const tmp = loadedData.location.split(',')[1];
+        setHeaderTitle(`${tmp.trim()}, Vietnam`);
+        console.log('loadedData', loadedData);
+      })
+      .catch(() => {
+        saveData('userInforStorage', {
+          name: '',
+          age: '',
+          goal: '',
+          location: 'Hoan Kiem, Hanoi',
+        });
+        setHeaderTitle('Hanoi, Vietnam');
+      });
+  }, []);
 
   useEffect(() => {
     const generateRandomLocations = (
