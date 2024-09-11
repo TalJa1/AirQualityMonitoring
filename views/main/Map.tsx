@@ -120,7 +120,26 @@ const Map = () => {
       );
     }
   };
-  // 04 15
+
+  const switchImg = (tabInd: number, mapIndex: number) => {
+    switch (tabInd) {
+      case 0:
+        console.log('render 0');
+        return Mapimages[mapIndex % Mapimages.length];
+      case 1:
+        console.log('render 1');
+        return require('../../assets/map/good.png');
+      case 2:
+        console.log('render 2');
+        return require('../../assets/map/medium.png');
+      case 3:
+        console.log('render 3');
+        return require('../../assets/map/notgood.png');
+      case 4:
+        console.log('render 4');
+        return require('../../assets/map/harmful.png');
+    }
+  };
 
   return (
     <GradientBackground colors={['white', '#E5FAFD']}>
@@ -167,17 +186,20 @@ const Map = () => {
                       />
                     </PointAnnotation>
                   )}
-                  {getFilteredLocations().map((loc, index) => (
-                    <PointAnnotation
-                      key={index.toString()}
-                      id={`randomLocation${index}`}
-                      coordinate={[loc.longitude, loc.latitude]}>
-                      <Image
-                        source={Mapimages[index % Mapimages.length]}
-                        style={{height: vw(15), width: vw(15)}}
-                      />
-                    </PointAnnotation>
-                  ))}
+                  {getFilteredLocations().map((loc, index) => {
+                    var img = switchImg(tabIndex, index);
+                    return (
+                      <PointAnnotation
+                        key={index.toString()}
+                        id={`randomLocation${index}`}
+                        coordinate={[loc.longitude, loc.latitude]}>
+                        <Image
+                          source={img}
+                          style={{height: vw(15), width: vw(15)}}
+                        />
+                      </PointAnnotation>
+                    );
+                  })}
                 </Mapbox.MapView>
               </View>
             </View>
