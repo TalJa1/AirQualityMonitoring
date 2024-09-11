@@ -100,15 +100,21 @@ const Map = () => {
                       zoomLevel={14}
                       centerCoordinate={[location.longitude, location.latitude]}
                       animationMode={'flyTo'}
-                      animationDuration={2000}
+                      animationDuration={1000}
                     />
                   )}
                   {location && (
                     <PointAnnotation
                       id="currentLocation"
-                      coordinate={[location.longitude, location.latitude]}
-                    >
-                      <View style={{height: 30, width: 30, backgroundColor: 'red', borderRadius: 15}} />
+                      coordinate={[location.longitude, location.latitude]}>
+                      <View
+                        style={{
+                          height: vw(3),
+                          width: vw(3),
+                          backgroundColor: 'red',
+                          borderRadius: 15,
+                        }}
+                      />
                     </PointAnnotation>
                   )}
                 </Mapbox.MapView>
