@@ -40,6 +40,19 @@ const Map = () => {
   const tabs = ['All', 'Good', 'Medium', 'Not Good', 'Harmful'];
 
   useEffect(() => {
+    const generateRandomLocations = (
+      baseLocation: Location,
+      count: number,
+      radius: number,
+    ): Location[] => {
+      const locations: Location[] = [];
+      for (let i = 0; i < count; i++) {
+        const randomLocation = getRandomLocation(baseLocation, radius);
+        locations.push(randomLocation);
+      }
+      return locations;
+    };
+
     const requestLocationPermission = async () => {
       if (Platform.OS === 'android') {
         const granted = await PermissionsAndroid.request(
@@ -74,19 +87,6 @@ const Map = () => {
     };
 
     requestLocationPermission();
-    // Function to generate random locations
-    const generateRandomLocations = (
-      baseLocation: Location,
-      count: number,
-      radius: number,
-    ): Location[] => {
-      const locations: Location[] = [];
-      for (let i = 0; i < count; i++) {
-        const randomLocation = getRandomLocation(baseLocation, radius);
-        locations.push(randomLocation);
-      }
-      return locations;
-    };
   }, []);
 
   const getRandomLocation = (
@@ -108,6 +108,29 @@ const Map = () => {
     const newLon = x + x0;
 
     return {latitude: newLat, longitude: newLon};
+  };
+
+  const getFilteredLocations = () => {
+    if (tabIndex === 0) {
+      return randomLocations;
+    } else {
+      return randomLocations.slice(0, 2);
+    }
+  };
+
+  const getImageForTab = () => {
+    switch (tabIndex) {
+      case 1: // Good
+        return Mapimages[0];
+      case 2: // Medium
+        return Mapimages[2];
+      case 3: // Not Good
+        return Mapimages[3];
+      case 4: // Harmful
+        return Mapimages[1];
+      default:
+        return null;
+    }
   };
 
   return (
@@ -155,7 +178,7 @@ const Map = () => {
                       />
                     </PointAnnotation>
                   )}
-                  {randomLocations.map((loc, index) => (
+                  {getFilteredLocations().map((loc, index) => (
                     <PointAnnotation
                       key={index.toString()}
                       id={`randomLocation${index}`}
