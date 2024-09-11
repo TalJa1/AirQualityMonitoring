@@ -12,6 +12,7 @@ import {
 import React, {useEffect, useState} from 'react';
 import OnboardingComponent from '../../components/begin/OnboardingComponent';
 import {centerAll, containerStyle, vh, vw} from '../../services/styleSheet';
+import {locationIcon} from '../../assets/svgXml';
 
 const Onboarding = () => {
   const [isBoarding, setIsBoarding] = useState(false);
@@ -165,9 +166,62 @@ const WelcomeView1: React.FC = () => {
 };
 
 const WelcomeView: React.FC = () => {
+  const [yourLocation, setYourLocation] = useState('Hoan kiem, Hanoi');
+  const [recommendLocation, setRecommendLocation] = useState([
+    'Hon Gai, Ha Long',
+    'Ngo Quyen, Hai Phong',
+    'Vu Ban, Nam Dinh',
+    'Que Vo, Bac Ninh',
+    'TP Ho Chi Minh',
+  ]);
+
+  const handleLocationPress = (index: number) => {
+    setRecommendLocation(prevLocations => {
+      const newLocations = [...prevLocations];
+      const selectedLocation = newLocations.splice(index, 1)[0];
+      newLocations.splice(index, 0, yourLocation);
+      setYourLocation(selectedLocation);
+      return newLocations;
+    });
+  };
   return (
-    <View>
-      <Text style={{color: '#6E778B'}}>T</Text>
+    <View style={{rowGap: vh(2)}}>
+      <View style={{rowGap: vh(1)}}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          {locationIcon(vw(5), vw(5))}
+          <Text style={styles.titleColor}> Your location</Text>
+        </View>
+        <View
+          style={{
+            backgroundColor: '#3E3792',
+            paddingVertical: vh(1.5),
+            paddingHorizontal: vw(5),
+            borderRadius: 8,
+          }}>
+          <Text style={{color: '#FCFCFC', fontWeight: 500}}>
+            {yourLocation}
+          </Text>
+        </View>
+      </View>
+      <View style={{rowGap: vh(1)}}>
+        <Text style={styles.titleColor}>Recommend for you</Text>
+        {recommendLocation.map((item, index) => {
+          return (
+            <TouchableOpacity
+              onPress={() => handleLocationPress(index)}
+              key={index}
+              style={{
+                paddingVertical: vh(1.5),
+                paddingHorizontal: vw(5),
+                borderRadius: 8,
+                borderWidth: 1,
+                borderColor: '#6E778B',
+              }}>
+              <Text style={{color: '#6E778B', fontWeight: '500'}}>{item}</Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
     </View>
   );
 };
@@ -265,4 +319,5 @@ export default Onboarding;
 
 const styles = StyleSheet.create({
   container: containerStyle,
+  titleColor: {color: '#4C4C4C', fontSize: 16, fontWeight: '700'},
 });
