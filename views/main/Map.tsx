@@ -114,24 +114,13 @@ const Map = () => {
     if (tabIndex === 0) {
       return randomLocations;
     } else {
-      return randomLocations.slice(0, 2);
+      const indices = [tabIndex - 1, tabIndex - 1 + 4];
+      return indices.map(
+        index => randomLocations[index % randomLocations.length],
+      );
     }
   };
-
-  const getImageForTab = () => {
-    switch (tabIndex) {
-      case 1: // Good
-        return Mapimages[0];
-      case 2: // Medium
-        return Mapimages[2];
-      case 3: // Not Good
-        return Mapimages[3];
-      case 4: // Harmful
-        return Mapimages[1];
-      default:
-        return null;
-    }
-  };
+  // 04 15
 
   return (
     <GradientBackground colors={['white', '#E5FAFD']}>

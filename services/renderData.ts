@@ -247,7 +247,7 @@ export const getRandomData = () => {
 
 export const Mapimages = [
   require('../assets/map/good.png'),
-  require('../assets/map/harmful.png'),
   require('../assets/map/medium.png'),
   require('../assets/map/notgood.png'),
+  require('../assets/map/harmful.png'),
 ];
