@@ -20,11 +20,11 @@ import {UserInforInterface} from '../../services/typeProps';
 const Rank = () => {
   useStatusBar('white');
   const [headerData, setHeaderData] = useState({
-    title: 'Hanoi',
-    subTitle: 'Hoan Kiem, Hanoi',
+    title: '',
+    subTitle: '',
   });
   const [selectedDate, setSelectedDate] = useState('current');
-  const {dateData, randomData} = getRandomData();
+  const {dateData, randomData} = getRandomData(headerData.title);
 
   useEffect(() => {
     loadData<UserInforInterface>('userInforStorage')

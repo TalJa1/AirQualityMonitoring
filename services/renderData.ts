@@ -180,7 +180,37 @@ export const AQIDetailData = [
   },
 ];
 
-export const getRandomData = () => {
+const HanoiDistricts = [
+  'Ba Dinh',
+  'Hoan Kiem',
+  'Tay Ho',
+  'Long Bien',
+  'Cau Giay',
+  'Dong Da',
+  'Hai Ba Trung',
+  'Hoang Mai',
+  'Thanh Xuan',
+  'Soc Son',
+  'Dong Anh',
+];
+
+const HCMDistricts = [
+  'District 1',
+  'District 3',
+  'District 4',
+  'District 5',
+  'District 6',
+  'District 7',
+  'District 8',
+  'District 10',
+  'District 12',
+  'Tan Binh',
+  'Phu Nhuan',
+];
+
+export const getRandomData = (title: string) => {
+  console.log('title', title);
+
   const daysOfWeek = [
     'Sunday',
     'Monday',
@@ -190,19 +220,7 @@ export const getRandomData = () => {
     'Friday',
     'Saturday',
   ];
-  const districts = [
-    'Ba Dinh',
-    'Hoan Kiem',
-    'Tay Ho',
-    'Long Bien',
-    'Cau Giay',
-    'Dong Da',
-    'Hai Ba Trung',
-    'Hoang Mai',
-    'Thanh Xuan',
-    'Soc Son',
-    'Dong Anh',
-  ];
+  const districts = title.trim() === 'TP HCM' ? HCMDistricts : HanoiDistricts;
 
   const today = new Date();
   const dateData = Array.from({length: 7}, (_, i) => {
