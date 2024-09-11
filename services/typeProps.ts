@@ -60,3 +60,16 @@ export type Location = {
   latitude: number;
   longitude: number;
 };
+
+export interface OnboardingInterfaceProps {
+  setIsNext: React.Dispatch<React.SetStateAction<boolean>>;
+  formData: {name: string; age: string; goal: string; location: string};
+  setFormData: React.Dispatch<
+    React.SetStateAction<{
+      name: string;
+      age: string;
+      goal: string;
+      location: string;
+    }>
+  >;
+}
