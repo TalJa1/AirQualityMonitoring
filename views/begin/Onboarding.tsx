@@ -14,6 +14,7 @@ import OnboardingComponent from '../../components/begin/OnboardingComponent';
 import {centerAll, containerStyle, vh, vw} from '../../services/styleSheet';
 import {locationIcon} from '../../assets/svgXml';
 import {OnboardingInterfaceProps} from '../../services/typeProps';
+import { saveData } from '../../services/storage';
 
 const Onboarding = () => {
   const [isBoarding, setIsBoarding] = useState(false);
@@ -25,6 +26,10 @@ const Onboarding = () => {
     goal: '',
     location: 'Hoan kiem, Hanoi',
   });
+
+  useEffect(() => {
+    saveData('userInforStorage', formData);
+  },[formData]);
 
   const getStepComponent = (): React.ReactNode => {
     switch (step) {
@@ -53,7 +58,7 @@ const Onboarding = () => {
           />
         );
       case 0.8:
-        return <WelcomeView1 />;
+        return <WelcomeView1 setIsNext={setIsNext} />;
       case 1:
         return (
           <WelcomeViewLast
@@ -129,11 +134,7 @@ const WelcomeViewLast: React.FC<OnboardingInterfaceProps> = ({
   setIsNext,
 }) => {
   useEffect(() => {
-    if (formData.goal.length > 0) {
-      setIsNext(true);
-    } else {
-      setIsNext(false);
-    }
+    setIsNext(true);
   }, [formData.goal, setIsNext]);
 
   return (
@@ -167,7 +168,13 @@ const WelcomeViewLast: React.FC<OnboardingInterfaceProps> = ({
   );
 };
 
-const WelcomeView1: React.FC = () => {
+const WelcomeView1: React.FC<{
+  setIsNext: React.Dispatch<React.SetStateAction<boolean>>;
+}> = ({setIsNext}) => {
+  useEffect(() => {
+    setIsNext(true);
+  }, [setIsNext]);
+
   return <></>;
 };
 

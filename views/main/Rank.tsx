@@ -14,6 +14,8 @@ import {Picker} from '@react-native-picker/picker';
 import {inforCircleIcon} from '../../assets/svgXml';
 import {getRandomData} from '../../services/renderData';
 import GradientBackground from '../../components/GradientBackground';
+import {loadData, saveData} from '../../services/storage';
+import {UserInforInterface} from '../../services/typeProps';
 
 const Rank = () => {
   useStatusBar('white');
@@ -23,6 +25,29 @@ const Rank = () => {
   });
   const [selectedDate, setSelectedDate] = useState('current');
   const {dateData, randomData} = getRandomData();
+
+  useEffect(() => {
+    loadData<UserInforInterface>('userInforStorage')
+      .then(loadedData => {
+        setHeaderData({
+          title: loadedData.location.split(',')[1],
+          subTitle: loadedData.location,
+        });
+        console.log('loadedData', loadedData);
+      })
+      .catch(() => {
+        saveData('userInforStorage', {
+          name: '',
+          age: '',
+          goal: '',
+          location: 'Hoan Kiem, Hanoi',
+        });
+        setHeaderData({
+          title: 'Hanoi',
+          subTitle: 'Hoan Kiem, Hanoi',
+        });
+      });
+  }, []);
 
   const filterDataByAQI = (min: number, max: number) => {
     return randomData

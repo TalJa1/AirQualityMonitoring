@@ -73,3 +73,10 @@ export interface OnboardingInterfaceProps {
     }>
   >;
 }
+
+export interface UserInforInterface {
+  name: string;
+  age: string;
+  goal: string;
+  location: string;
+}

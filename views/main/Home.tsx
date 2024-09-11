@@ -10,7 +10,7 @@ import {
   Easing,
   Dimensions,
 } from 'react-native';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {centerAll, TAB_BAR_HEIGHT, vh, vw} from '../../services/styleSheet';
 import HeaderComponent from '../../components/HeaderComponent';
@@ -34,13 +34,33 @@ import {LineChart} from 'react-native-gifted-charts';
 import Slider from '../../components/home/Slider';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {UserInforInterface} from '../../services/typeProps';
+import {loadData, saveData} from '../../services/storage';
 
 const Home = () => {
   useStatusBar('white');
   const slideAnim = useRef(new Animated.Value(0)).current; // Initial value for sliding animation
   const [isSlidUp, setIsSlidUp] = useState(false); // State to track if the view is slid up
-  const [pageSubTitle, setPageSubTitle] = useState('Hoan Kiem, Hanoi');
+  const [pageSubTitle, setPageSubTitle] = useState('');
   const [aqiIndex, setAqiIndex] = useState(176);
+
+  // Load data from react native storage
+  useEffect(() => {
+    loadData<UserInforInterface>('userInforStorage')
+      .then(loadedData => {
+        setPageSubTitle(loadedData.location);
+        console.log('loadedData', loadedData);
+      })
+      .catch(() => {
+        saveData('userInforStorage', {
+          name: '',
+          age: '',
+          goal: '',
+          location: 'Hoan Kiem, Hanoi',
+        });
+        setPageSubTitle('Hoan Kiem, Hanoi');
+      });
+  }, []);
 
   const toggleSlide = () => {
     Animated.timing(slideAnim, {
