@@ -25,7 +25,7 @@ import GradientBackground from '../../components/GradientBackground';
 import Mapbox, {Camera, PointAnnotation} from '@rnmapbox/maps';
 import {Location, TabBarProps} from '../../services/typeProps';
 import Geolocation from 'react-native-geolocation-service';
-import { Mapimages } from '../../services/renderData';
+import {Mapimages} from '../../services/renderData';
 
 Mapbox.setAccessToken(
   'pk.eyJ1IjoidGFsamExIiwiYSI6ImNtMHc3bnNkczAxOGEya3IxaTltZHF4Z3oifQ.JQc_12qN-6j_p2LnqV6n-A',
@@ -64,7 +64,7 @@ const Map = () => {
             longitude: position.coords.longitude,
           };
           setLocation(currentLocation);
-          setRandomLocations(generateRandomLocations(currentLocation, 4, 1000));
+          setRandomLocations(generateRandomLocations(currentLocation, 8, 1000));
         },
         error => {
           console.log(error.code, error.message);
@@ -161,7 +161,7 @@ const Map = () => {
                       id={`randomLocation${index}`}
                       coordinate={[loc.longitude, loc.latitude]}>
                       <Image
-                        source={Mapimages[index]}
+                        source={Mapimages[index % Mapimages.length]}
                         style={{height: vw(15), width: vw(15)}}
                       />
                     </PointAnnotation>
