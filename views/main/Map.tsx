@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
@@ -43,7 +44,10 @@ const Map = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const [location, setLocation] = useState<Location | null>(null);
   const [randomLocations, setRandomLocations] = useState<Location[]>([]);
+  const [renderRandom, setRenderRandom] = useState<Location[]>([]);
   const tabs = ['All', 'Good', 'Medium', 'Not Good', 'Harmful'];
+
+  console.log('randomLocations', randomLocations);
 
   useEffect(() => {
     loadData<UserInforInterface>('userInforStorage')
@@ -63,59 +67,61 @@ const Map = () => {
       });
   }, []);
 
-  useFocusEffect(
-    useCallback(() => {
-      const generateRandomLocations = (
-        baseLocation: Location,
-        count: number,
-        radius: number,
-      ): Location[] => {
-        const locations: Location[] = [];
-        for (let i = 0; i < count; i++) {
-          const randomLocation = getRandomLocation(baseLocation, radius);
-          locations.push(randomLocation);
-        }
-        return locations;
-      };
+  const generateRandomLocations = (
+    baseLocation: Location,
+    count: number,
+    radius: number,
+  ): Location[] => {
+    const locations: Location[] = [];
+    for (let i = 0; i < count; i++) {
+      const randomLocation = getRandomLocation(baseLocation, radius);
+      locations.push(randomLocation);
+    }
+    return locations;
+  };
 
-      const requestLocationPermission = async () => {
-        if (Platform.OS === 'android') {
-          const granted = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-            {
-              title: 'Location Permission',
-              message: 'This app needs access to your location',
-              buttonNeutral: 'Ask Me Later',
-              buttonNegative: 'Cancel',
-              buttonPositive: 'OK',
-            },
-          );
-          if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
-            console.log('Location permission denied');
-            return;
-          }
-        }
-        Geolocation.getCurrentPosition(
-          position => {
-            const currentLocation = {
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude,
-            };
-            setLocation(currentLocation);
-            setRandomLocations(
-              generateRandomLocations(currentLocation, 8, 1000),
-            );
-          },
-          error => {
-            console.log(error.code, error.message);
-          },
-          {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+  const requestLocationPermission = async () => {
+    if (Platform.OS === 'android') {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'Location Permission',
+          message: 'This app needs access to your location',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('Location permission denied');
+        return;
+      }
+    }
+    Geolocation.getCurrentPosition(
+      position => {
+        const currentLocation = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        };
+        setLocation(currentLocation);
+        const generatedLocations = generateRandomLocations(
+          currentLocation,
+          8,
+          1000,
         );
-      };
+        setRandomLocations(generatedLocations);
+        setRenderRandom(generatedLocations); // Set initial renderRandom
+      },
+      error => {
+        console.log(error.code, error.message);
+      },
+      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+    );
+  };
 
-      requestLocationPermission();
-    }, []),
-  );
+  useEffect(() => {
+    requestLocationPermission();
+  }, []);
 
   const getRandomLocation = (
     baseLocation: Location,
@@ -138,16 +144,20 @@ const Map = () => {
     return {latitude: newLat, longitude: newLon};
   };
 
-  const getFilteredLocations = () => {
-    if (tabIndex === 0) {
-      return randomLocations;
+  const updateRenderRandom = (index: number) => {
+    if (index === 0) {
+      setRenderRandom(randomLocations);
     } else {
-      const indices = [tabIndex - 1, tabIndex - 1 + 4];
-      return indices.map(
-        index => randomLocations[index % randomLocations.length],
+      const indices = [index - 1, index - 1 + 4];
+      setRenderRandom(
+        indices.map(idx => randomLocations[idx % randomLocations.length]),
       );
     }
   };
+
+  useEffect(() => {
+    updateRenderRandom(tabIndex);
+  }, [tabIndex, randomLocations]);
 
   const switchImg = (tabInd: number, mapIndex: number) => {
     switch (tabInd) {
@@ -209,7 +219,7 @@ const Map = () => {
                       />
                     </PointAnnotation>
                   )}
-                  {getFilteredLocations().map((loc, index) => {
+                  {renderRandom.map((loc, index) => {
                     var img = switchImg(tabIndex, index);
                     return (
                       <PointAnnotation
