@@ -16,7 +16,7 @@ import {centerAll, vh, vw} from '../../services/styleSheet';
 import useStatusBar from '../../services/useStatusBarCustom';
 import HeaderComponent from '../../components/HeaderComponent';
 import GradientBackground from '../../components/GradientBackground';
-import Mapbox, {Camera, PointAnnotation} from '@rnmapbox/maps';
+import Mapbox, {Camera, MarkerView, PointAnnotation} from '@rnmapbox/maps';
 import {
   Location,
   TabBarProps,
@@ -229,14 +229,17 @@ const Map = () => {
                     )}
                     {renderRandom.map((loc, index) => {
                       return (
-                        <PointAnnotation
+                        <MarkerView
                           key={`${tabIndex}-${index}`}
                           id={`randomLocation${tabIndex}-${index}`}
                           coordinate={[loc.longitude, loc.latitude]}>
-                          <View>
+                          <TouchableOpacity
+                            onPress={() => {
+                              console.log('clicked', index);
+                            }}>
                             {selectedIcons[index % selectedIcons.length]}
-                          </View>
-                        </PointAnnotation>
+                          </TouchableOpacity>
+                        </MarkerView>
                       );
                     })}
                   </Mapbox.MapView>
