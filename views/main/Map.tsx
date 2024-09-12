@@ -2,7 +2,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {
   ActivityIndicator,
-  Image,
   PermissionsAndroid,
   Platform,
   ScrollView,
@@ -24,8 +23,14 @@ import {
   UserInforInterface,
 } from '../../services/typeProps';
 import Geolocation from 'react-native-geolocation-service';
-import {Mapimages} from '../../services/renderData';
+import {Mapicons} from '../../services/renderData';
 import {loadData, saveData} from '../../services/storage';
+import {
+  goodQualityIcon,
+  harmfulQualityIcon,
+  mediumQualityIcon,
+  notGoodQualityIcon,
+} from '../../assets/svgXml';
 
 Mapbox.setAccessToken(
   'pk.eyJ1IjoidGFsamExIiwiYSI6ImNtMHc3bnNkczAxOGEya3IxaTltZHF4Z3oifQ.JQc_12qN-6j_p2LnqV6n-A',
@@ -154,18 +159,18 @@ const Map = () => {
     updateRenderRandom(tabIndex);
   }, [tabIndex, randomLocations]);
 
-  const switchImg = (tabInd: number, mapIndex: number) => {
+  const switchIcon = (tabInd: number, mapIndex: number) => {
     switch (tabInd) {
       case 0:
-        return Mapimages[mapIndex % Mapimages.length];
+        return Mapicons[mapIndex % Mapicons.length];
       case 1:
-        return require('../../assets/map/good.png');
+        return goodQualityIcon(vw(8), vw(8));
       case 2:
-        return require('../../assets/map/medium.png');
+        return mediumQualityIcon(vw(8), vw(8));
       case 3:
-        return require('../../assets/map/notgood.png');
+        return notGoodQualityIcon(vw(8), vw(8));
       case 4:
-        return require('../../assets/map/harmful.png');
+        return harmfulQualityIcon(vw(8), vw(8));
     }
   };
 
@@ -223,21 +228,13 @@ const Map = () => {
                       </PointAnnotation>
                     )}
                     {renderRandom.map((loc, index) => {
-                      const img = switchImg(tabIndex, index);
+                      const img = switchIcon(tabIndex, index);
                       return (
                         <PointAnnotation
                           key={index.toString()}
                           id={`randomLocation${index}`}
                           coordinate={[loc.longitude, loc.latitude]}>
-                          <Image
-                            source={img}
-                            style={{height: vw(13), width: vw(13)}} // Adjust the size as needed
-                            onLoad={() => {
-                              if (index === renderRandom.length - 1) {
-                                setLoading(false);
-                              }
-                            }}
-                          />
+                          <View>{img}</View>
                         </PointAnnotation>
                       );
                     })}

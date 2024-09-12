@@ -9,6 +9,46 @@ export const test = (w?: any, h?: any, color?: any) => {
   return <SvgXml xml={xml} width={w} height={h} />;
 };
 
+export const mediumQualityIcon = (w?: any, h?: any, color?: any) => {
+  const xml = `<svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M20.6972 10.697C20.6972 18.2391 11.0002 24.7037 11.0002 24.7037C11.0002 24.7037 1.30322 18.2391 1.30322 10.697C1.30322 5.34148 5.6447 1 11.0002 1C16.3557 1 20.6972 5.34148 20.6972 10.697Z" fill="#E0D818" stroke="#E0D818" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M11.0004 13.9292C12.7856 13.9292 14.2327 12.4821 14.2327 10.6969C14.2327 8.91176 12.7856 7.4646 11.0004 7.4646C9.21523 7.4646 7.76807 8.91176 7.76807 10.6969C7.76807 12.4821 9.21523 13.9292 11.0004 13.9292Z" fill="#FCFCFC" stroke="#FCFCFC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+  return <SvgXml xml={xml} width={w} height={h} />;
+};
+
+export const harmfulQualityIcon = (w?: any, h?: any, color?: any) => {
+  const xml = `<svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M20.6969 10.697C20.6969 18.2391 10.9999 24.7037 10.9999 24.7037C10.9999 24.7037 1.30298 18.2391 1.30298 10.697C1.30298 5.34148 5.64446 1 10.9999 1C16.3554 1 20.6969 5.34148 20.6969 10.697Z" fill="#AC3939" stroke="#AC3939" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M10.9999 13.9292C12.7851 13.9292 14.2322 12.4821 14.2322 10.6969C14.2322 8.91176 12.7851 7.4646 10.9999 7.4646C9.21474 7.4646 7.76758 8.91176 7.76758 10.6969C7.76758 12.4821 9.21474 13.9292 10.9999 13.9292Z" fill="#FCFCFC" stroke="#FCFCFC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+  return <SvgXml xml={xml} width={w} height={h} />;
+};
+
+export const notGoodQualityIcon = (w?: any, h?: any, color?: any) => {
+  const xml = `<svg width="23" height="26" viewBox="0 0 23 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M21.1969 10.697C21.1969 18.2391 11.4999 24.7037 11.4999 24.7037C11.4999 24.7037 1.80298 18.2391 1.80298 10.697C1.80298 5.34148 6.14446 1 11.4999 1C16.8554 1 21.1969 5.34148 21.1969 10.697Z" fill="#C77A20" stroke="#C77A20" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M11.4999 13.9292C13.2851 13.9292 14.7322 12.4821 14.7322 10.6969C14.7322 8.91176 13.2851 7.4646 11.4999 7.4646C9.71474 7.4646 8.26758 8.91176 8.26758 10.6969C8.26758 12.4821 9.71474 13.9292 11.4999 13.9292Z" fill="#FCFCFC" stroke="#FCFCFC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+  return <SvgXml xml={xml} width={w} height={h} />;
+};
+
+export const goodQualityIcon = (w?: any, h?: any, color?: any) => {
+  const xml = `<svg width="23" height="26" viewBox="0 0 23 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M21.1972 10.697C21.1972 18.2391 11.5002 24.7037 11.5002 24.7037C11.5002 24.7037 1.80322 18.2391 1.80322 10.697C1.80322 5.34148 6.1447 1 11.5002 1C16.8557 1 21.1972 5.34148 21.1972 10.697Z" fill="#1BA564" stroke="#1BA564" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M11.5004 13.9292C13.2856 13.9292 14.7327 12.4821 14.7327 10.6969C14.7327 8.91176 13.2856 7.4646 11.5004 7.4646C9.71523 7.4646 8.26807 8.91176 8.26807 10.6969C8.26807 12.4821 9.71523 13.9292 11.5004 13.9292Z" fill="#FCFCFC" stroke="#FCFCFC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+  return <SvgXml xml={xml} width={w} height={h} />;
+};
+
 export const inforCircleIcon = (w?: any, h?: any, color?: any) => {
   const xml = `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M10 5.01001V5.00002M10 15L10 8M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z" stroke=${

@@ -1,6 +1,10 @@
 import {
   chanceOfRainIcon,
+  goodQualityIcon,
+  harmfulQualityIcon,
   humidityIcon,
+  mediumQualityIcon,
+  notGoodQualityIcon,
   sensedTemperatureIcon,
   turbidityOfCloudsIcon,
   windICon,
@@ -268,4 +272,11 @@ export const Mapimages = [
   require('../assets/map/medium.png'),
   require('../assets/map/notgood.png'),
   require('../assets/map/harmful.png'),
+];
+
+export const Mapicons = [
+  goodQualityIcon(vw(8), vw(8)),
+  mediumQualityIcon(vw(8), vw(8)),
+  notGoodQualityIcon(vw(8), vw(8)),
+  harmfulQualityIcon(vw(8), vw(8)),
 ];
