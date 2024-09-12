@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
+  ActivityIndicator,
   Image,
   PermissionsAndroid,
   Platform,
@@ -11,15 +11,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {
-  centerAll,
-  containerStyle,
-  TAB_BAR_HEIGHT,
-  vh,
-  vw,
-} from '../../services/styleSheet';
+import {centerAll, vh, vw} from '../../services/styleSheet';
 import useStatusBar from '../../services/useStatusBarCustom';
 import HeaderComponent from '../../components/HeaderComponent';
 import GradientBackground from '../../components/GradientBackground';
@@ -32,7 +26,6 @@ import {
 import Geolocation from 'react-native-geolocation-service';
 import {Mapimages} from '../../services/renderData';
 import {loadData, saveData} from '../../services/storage';
-import {useFocusEffect} from '@react-navigation/native';
 
 Mapbox.setAccessToken(
   'pk.eyJ1IjoidGFsamExIiwiYSI6ImNtMHc3bnNkczAxOGEya3IxaTltZHF4Z3oifQ.JQc_12qN-6j_p2LnqV6n-A',
@@ -46,8 +39,9 @@ const Map = () => {
   const [randomLocations, setRandomLocations] = useState<Location[]>([]);
   const [renderRandom, setRenderRandom] = useState<Location[]>([]);
   const tabs = ['All', 'Good', 'Medium', 'Not Good', 'Harmful'];
+  const [loading, setLoading] = useState(true);
 
-  console.log('randomLocations', randomLocations);
+  console.log('renderRandom', renderRandom);
 
   useEffect(() => {
     loadData<UserInforInterface>('userInforStorage')
@@ -111,6 +105,7 @@ const Map = () => {
         );
         setRandomLocations(generatedLocations);
         setRenderRandom(generatedLocations); // Set initial renderRandom
+        setLoading(false); // Set loading to false once locations are set
       },
       error => {
         console.log(error.code, error.message);
@@ -194,48 +189,62 @@ const Map = () => {
                 tabs={tabs}
               />
             </View>
-            <View style={styles.page}>
-              <View style={styles.mapcontainer}>
-                <Mapbox.MapView style={styles.map}>
-                  {location && (
-                    <Camera
-                      zoomLevel={14}
-                      centerCoordinate={[location.longitude, location.latitude]}
-                      animationMode={'flyTo'}
-                      animationDuration={500}
-                    />
-                  )}
-                  {location && (
-                    <PointAnnotation
-                      id="currentLocation"
-                      coordinate={[location.longitude, location.latitude]}>
-                      <View
-                        style={{
-                          height: vw(3),
-                          width: vw(3),
-                          backgroundColor: 'red',
-                          borderRadius: 15,
-                        }}
+            {loading ? (
+              <View style={styles.loadingContainer}>
+                <ActivityIndicator size="large" color="#0000ff" />
+              </View>
+            ) : (
+              <View style={styles.page}>
+                <View style={styles.mapcontainer}>
+                  <Mapbox.MapView style={styles.map}>
+                    {location && (
+                      <Camera
+                        zoomLevel={14}
+                        centerCoordinate={[
+                          location.longitude,
+                          location.latitude,
+                        ]}
+                        animationMode={'flyTo'}
+                        animationDuration={500}
                       />
-                    </PointAnnotation>
-                  )}
-                  {renderRandom.map((loc, index) => {
-                    var img = switchImg(tabIndex, index);
-                    return (
+                    )}
+                    {location && (
                       <PointAnnotation
-                        key={index.toString()}
-                        id={`randomLocation${index}`}
-                        coordinate={[loc.longitude, loc.latitude]}>
-                        <Image
-                          source={img}
-                          style={{height: vw(15), width: vw(15)}}
+                        id="currentLocation"
+                        coordinate={[location.longitude, location.latitude]}>
+                        <View
+                          style={{
+                            height: vw(3),
+                            width: vw(3),
+                            backgroundColor: 'red',
+                            borderRadius: 15,
+                          }}
                         />
                       </PointAnnotation>
-                    );
-                  })}
-                </Mapbox.MapView>
+                    )}
+                    {renderRandom.map((loc, index) => {
+                      const img = switchImg(tabIndex, index);
+                      return (
+                        <PointAnnotation
+                          key={index.toString()}
+                          id={`randomLocation${index}`}
+                          coordinate={[loc.longitude, loc.latitude]}>
+                          <Image
+                            source={img}
+                            style={{height: vw(13), width: vw(13)}} // Adjust the size as needed
+                            onLoad={() => {
+                              if (index === renderRandom.length - 1) {
+                                setLoading(false);
+                              }
+                            }}
+                          />
+                        </PointAnnotation>
+                      );
+                    })}
+                  </Mapbox.MapView>
+                </View>
               </View>
-            </View>
+            )}
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -297,5 +306,9 @@ const styles = StyleSheet.create({
     color: '#CCCED5',
     fontSize: 14,
     fontWeight: '700',
+  },
+  loadingContainer: {
+    position: 'absolute',
+    top: vh(40),
   },
 });
