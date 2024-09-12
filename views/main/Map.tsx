@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {centerAll, vh, vw} from '../../services/styleSheet';
 import useStatusBar from '../../services/useStatusBarCustom';
@@ -157,6 +157,23 @@ const Map = () => {
     updateRenderRandom(tabIndex);
   }, [tabIndex, randomLocations]);
 
+  const selectedIcons = useMemo(() => {
+    switch (tabIndex) {
+      case 0:
+        return Mapicons;
+      case 1:
+        return [goodQualityIcon(vw(8), vw(8))];
+      case 2:
+        return [mediumQualityIcon(vw(8), vw(8))];
+      case 3:
+        return [notGoodQualityIcon(vw(8), vw(8))];
+      case 4:
+        return [harmfulQualityIcon(vw(8), vw(8))];
+      default:
+        return [];
+    }
+  }, [tabIndex]);
+
   return (
     <GradientBackground colors={['white', '#E5FAFD']}>
       <SafeAreaView style={styles.container}>
@@ -211,34 +228,13 @@ const Map = () => {
                       </PointAnnotation>
                     )}
                     {renderRandom.map((loc, index) => {
-                      const switchIcon = (tabInd: number) => {
-                        switch (tabInd) {
-                          case 0:
-                            return Mapicons;
-                          case 1:
-                            return [goodQualityIcon(vw(8), vw(8))];
-                          case 2:
-                            return [mediumQualityIcon(vw(8), vw(8))];
-                          case 3:
-                            return [notGoodQualityIcon(vw(8), vw(8))];
-                          case 4:
-                            return [harmfulQualityIcon(vw(8), vw(8))];
-                          default:
-                            return [];
-                        }
-                      };
-
                       return (
                         <PointAnnotation
-                          key={index.toString()}
-                          id={`randomLocation${index}`}
+                          key={`${tabIndex}-${index}`}
+                          id={`randomLocation${tabIndex}-${index}`}
                           coordinate={[loc.longitude, loc.latitude]}>
                           <View>
-                            {
-                              switchIcon(tabIndex)[
-                                index % switchIcon(tabIndex).length
-                              ]
-                            }
+                            {selectedIcons[index % selectedIcons.length]}
                           </View>
                         </PointAnnotation>
                       );
