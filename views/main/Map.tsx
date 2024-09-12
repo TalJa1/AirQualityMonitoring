@@ -46,8 +46,6 @@ const Map = () => {
   const tabs = ['All', 'Good', 'Medium', 'Not Good', 'Harmful'];
   const [loading, setLoading] = useState(true);
 
-  console.log('renderRandom', renderRandom);
-
   useEffect(() => {
     loadData<UserInforInterface>('userInforStorage')
       .then(loadedData => {
@@ -159,21 +157,6 @@ const Map = () => {
     updateRenderRandom(tabIndex);
   }, [tabIndex, randomLocations]);
 
-  const switchIcon = (tabInd: number, mapIndex: number) => {
-    switch (tabInd) {
-      case 0:
-        return Mapicons[mapIndex % Mapicons.length];
-      case 1:
-        return goodQualityIcon(vw(8), vw(8));
-      case 2:
-        return mediumQualityIcon(vw(8), vw(8));
-      case 3:
-        return notGoodQualityIcon(vw(8), vw(8));
-      case 4:
-        return harmfulQualityIcon(vw(8), vw(8));
-    }
-  };
-
   return (
     <GradientBackground colors={['white', '#E5FAFD']}>
       <SafeAreaView style={styles.container}>
@@ -228,13 +211,35 @@ const Map = () => {
                       </PointAnnotation>
                     )}
                     {renderRandom.map((loc, index) => {
-                      const img = switchIcon(tabIndex, index);
+                      const switchIcon = (tabInd: number) => {
+                        switch (tabInd) {
+                          case 0:
+                            return Mapicons;
+                          case 1:
+                            return [goodQualityIcon(vw(8), vw(8))];
+                          case 2:
+                            return [mediumQualityIcon(vw(8), vw(8))];
+                          case 3:
+                            return [notGoodQualityIcon(vw(8), vw(8))];
+                          case 4:
+                            return [harmfulQualityIcon(vw(8), vw(8))];
+                          default:
+                            return [];
+                        }
+                      };
+
                       return (
                         <PointAnnotation
                           key={index.toString()}
                           id={`randomLocation${index}`}
                           coordinate={[loc.longitude, loc.latitude]}>
-                          <View>{img}</View>
+                          <View>
+                            {
+                              switchIcon(tabIndex)[
+                                index % switchIcon(tabIndex).length
+                              ]
+                            }
+                          </View>
                         </PointAnnotation>
                       );
                     })}
