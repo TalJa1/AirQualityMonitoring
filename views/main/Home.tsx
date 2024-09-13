@@ -322,6 +322,7 @@ const AQIMain: React.FC<{
         </Text>
       </View>
       <TouchableOpacity
+        disabled={true}
         style={[
           {
             backgroundColor: 'white',
