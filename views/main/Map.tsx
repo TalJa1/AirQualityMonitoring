@@ -45,6 +45,7 @@ const Map = () => {
   const [renderRandom, setRenderRandom] = useState<Location[]>([]);
   const tabs = ['All', 'Good', 'Medium', 'Not Good', 'Harmful'];
   const [loading, setLoading] = useState(true);
+  const [markerClicked, setMarkerClicked] = useState<null | Number>(null);
 
   useEffect(() => {
     loadData<UserInforInterface>('userInforStorage')
@@ -174,6 +175,36 @@ const Map = () => {
     }
   }, [tabIndex]);
 
+  const getColorByIndex = (index: number) => {
+    if (tabIndex === 0) {
+      switch (index % 4) {
+        case 0:
+          return '#1BA564';
+        case 1:
+          return '#E0D818';
+        case 2:
+          return '#C77A20';
+        case 3:
+          return '#AC3939';
+        default:
+          return 'black';
+      }
+    } else {
+      switch (tabIndex) {
+        case 1:
+          return '#1BA564';
+        case 2:
+          return '#E0D818';
+        case 3:
+          return '#C77A20';
+        case 4:
+          return '#AC3939';
+        default:
+          return 'black'; // Default color if none of the cases match
+      }
+    }
+  };
+
   return (
     <GradientBackground colors={['white', '#E5FAFD']}>
       <SafeAreaView style={styles.container}>
@@ -234,10 +265,32 @@ const Map = () => {
                           id={`randomLocation${tabIndex}-${index}`}
                           coordinate={[loc.longitude, loc.latitude]}>
                           <TouchableOpacity
-                            onPress={() => {
-                              console.log('clicked', index);
-                            }}>
+                            style={centerAll}
+                            onPress={() => setMarkerClicked(index)}>
                             {selectedIcons[index % selectedIcons.length]}
+                            {markerClicked === index && (
+                              <View
+                                style={[
+                                  {
+                                    zIndex: -1,
+                                    backgroundColor: 'white',
+                                    borderRadius: 8,
+                                    padding: vw(2),
+                                    position: 'relative',
+                                    top: vh(-0.6),
+                                  },
+                                  centerAll,
+                                ]}>
+                                <Text
+                                  style={{
+                                    color: getColorByIndex(index),
+                                    fontWeight: '700',
+                                    fontSize: 12,
+                                  }}>
+                                  AQI: {index * 10}
+                                </Text>
+                              </View>
+                            )}
                           </TouchableOpacity>
                         </MarkerView>
                       );
