@@ -18,3 +18,9 @@ export const centerAll: TextStyle = {
   justifyContent: 'center',
   alignItems: 'center',
 };
+
+export const containerStyle: TextStyle = {
+  flex: 1,
+};
+
+export const TAB_BAR_HEIGHT = vh(8) + vh(1) * 2;
