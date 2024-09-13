@@ -205,6 +205,25 @@ const Map = () => {
     }
   };
 
+  const getAQIMap = (color: string) => {
+    const getRandomFromPair = (pair: [number, number]) => {
+      return pair[Math.floor(Math.random() * pair.length)];
+    };
+
+    switch (color) {
+      case '#1BA564':
+        return getRandomFromPair([31, 44]);
+      case '#E0D818':
+        return getRandomFromPair([89, 95]);
+      case '#C77A20':
+        return getRandomFromPair([138, 145]);
+      case '#AC3939':
+        return getRandomFromPair([178, 199]);
+      default:
+        return 0;
+    }
+  };
+
   return (
     <GradientBackground colors={['white', '#E5FAFD']}>
       <SafeAreaView style={styles.container}>
@@ -287,7 +306,7 @@ const Map = () => {
                                     fontWeight: '700',
                                     fontSize: 12,
                                   }}>
-                                  AQI: {index * 10}
+                                  AQI: {getAQIMap(getColorByIndex(index))}
                                 </Text>
                               </View>
                             )}
