@@ -36,9 +36,11 @@ const App = () => {
             tabBarIcon: ({color, focused}) => {
               const iconSize = focused ? vw(7) : vw(6);
               return (
-                <View>
+                <View style={styles.tabBarItem}>
                   {focused && <View style={styles.activeLine} />}
-                  {homeIcon(iconSize, iconSize, color)}
+                  <View style={styles.tabIcon}>
+                    {homeIcon(iconSize, iconSize, color)}
+                  </View>
                 </View>
               );
             },
@@ -52,9 +54,11 @@ const App = () => {
             tabBarIcon: ({color, focused}) => {
               const iconSize = focused ? vw(7) : vw(6);
               return (
-                <View>
+                <View style={styles.tabBarItem}>
                   {focused && <View style={styles.activeLine} />}
-                  {rankIcon(iconSize, iconSize, color)}
+                  <View style={styles.tabIcon}>
+                    {rankIcon(iconSize, iconSize, color)}
+                  </View>
                 </View>
               );
             },
@@ -68,9 +72,11 @@ const App = () => {
             tabBarIcon: ({color, focused}) => {
               const iconSize = focused ? vw(7) : vw(6);
               return (
-                <View>
+                <View style={styles.tabBarItem}>
                   {focused && <View style={styles.activeLine} />}
-                  {mapIcon(iconSize, iconSize, color)}
+                  <View style={styles.tabIcon}>
+                    {mapIcon(iconSize, iconSize, color)}
+                  </View>
                 </View>
               );
             },
@@ -115,7 +121,6 @@ const styles = StyleSheet.create({
   tabBar: {
     height: vh(8),
     borderRadius: 12,
-    paddingVertical: vh(1),
     position: 'absolute',
     bottom: vh(1),
     left: vw(5),
@@ -131,15 +136,22 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     paddingBottom: vh(1),
   },
+  tabIcon: {
+    position: 'relative',
+    top: vh(1),
+  },
   activeLine: {
     position: 'absolute',
-    top: '-45%', // Adjust to place the line on the border
+    top: 0,
     left: 0,
     right: 0,
     height: vh(0.5), // Use viewport height for height
     borderBottomLeftRadius: vw(5),
     borderBottomRightRadius: vw(5),
     backgroundColor: '#3E3792',
+  },
+  tabBarItem: {
+    height: '100%',
   },
 });
 
