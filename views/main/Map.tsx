@@ -227,7 +227,7 @@ const Map = () => {
   return (
     <GradientBackground colors={['white', '#E5FAFD']}>
       <SafeAreaView style={styles.container}>
-        <ScrollView>
+        <ScrollView style={{flex: 1}}>
           <HeaderComponent title={headerTitle} isBack={false} subtitle=" " />
           <View style={{flex: 1, alignItems: 'center'}}>
             <View
@@ -319,6 +319,7 @@ const Map = () => {
               </View>
             )}
           </View>
+          <View style={{height: vh(9)}} />
         </ScrollView>
       </SafeAreaView>
     </GradientBackground>
@@ -359,7 +360,6 @@ const styles = StyleSheet.create({
   container: {flex: 1},
   page: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
   },
   mapcontainer: {
